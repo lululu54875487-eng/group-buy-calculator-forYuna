@@ -197,7 +197,7 @@ function calculate(forceRecalc = false) {
   giftRows.forEach(r => {
     const amount = Number(r.children[2].value);
     const shared = r.children[3].checked;
-    if (shared) giftSharedTotal -= amount;
+    if (shared) giftSharedTotal += amount;
   });
 
   const sharePerItem = itemRows.length
