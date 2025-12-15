@@ -6,19 +6,26 @@
 <title>Yuna團購湊團計算器</title>
 <style>
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: #f6f7f9;
-    padding: 10px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", "Noto Sans TC", sans-serif;
+    background: #f2f2f7;      /* iOS 系統背景 */
+    padding: 12px;
+    margin: 0;
 }
-h2 { text-align: center; }
+h2 {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 6px 0 14px;
+}
 h4 { text-align: center; }
 
 
 .section {
-    background: #fff;
-    padding: 12px;
-    border-radius: 10px;
-    margin-bottom: 12px;
+    background: #ffffff;
+    padding: 14px;
+    border-radius: 14px;
+    margin-bottom: 14px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.04);
 }
 
 .grid3 {
@@ -28,15 +35,19 @@ h4 { text-align: center; }
 }
 
 .label {
-    font-size: 13px;
-    color: #555;
+    font-size: 12px;
+    color: #8e8e93;
+    margin-bottom: 2px;
 }
 
 input {
     width: 100%;
-    padding: 6px 8px;
+    padding: 6px 10px;
     font-size: 15px;
-    height: 38px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1px solid #d1d1d6;
+    background: #ffffff;
     box-sizing: border-box;
 }
 
@@ -64,28 +75,31 @@ input {
 }
 
 .adjust button {
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 16px;
     padding: 0;
 }
-
 button {
-    padding: 8px;
-    font-size: 14px;
+    padding: 10px;
+    font-size: 15px;
     border: none;
-    border-radius: 6px;
-    background: #4a6cf7;
+    border-radius: 10px;
+    background: #007aff;     /* iOS Blue */
     color: #fff;
+    font-weight: 500;
 }
 
 button.delete {
-    background: #ccc;
-    color: #333;
+    background: #e5e5ea;
+    color: #3a3a3c;
 }
 
 .highlight {
     font-size: 17px;
-    font-weight: bold;
+    font-weight: 600;
+    margin-bottom: 6px;
 }
 
 .ok { color: green; }
@@ -297,6 +311,7 @@ addItem();
 
 </body>
 </html>
+
 
 
 
