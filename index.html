@@ -226,7 +226,7 @@ function addGift() {
     renumber();
 }
 
-function calculate(forceRecalc = false) {
+function calculate() {
     // ⭐ 若平均折入有變動，解除所有團購價鎖定
     document.querySelectorAll("#items .price-input").forEach(el => {
     delete el.dataset.locked;
@@ -316,6 +316,7 @@ addItem();
 
 </body>
 </html>
+
 
 
 
