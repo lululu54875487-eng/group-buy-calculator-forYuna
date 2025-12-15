@@ -300,6 +300,7 @@ function calculate(forceRecalc = false) {
 addItem();
 
 function copyText() {
+  calculate(); // ⭐⭐⭐ 這一行一定要有
   let text = `📦 湊團認購清單
 
 `;
@@ -344,6 +345,7 @@ function copyText() {
 
 </body>
 </html>
+
 
 
 
