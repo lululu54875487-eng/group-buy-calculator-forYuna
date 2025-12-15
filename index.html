@@ -227,6 +227,10 @@ function addGift() {
 }
 
 function calculate() {
+    // ⭐ 若平均折入有變動，解除所有團購價鎖定
+    document.querySelectorAll("#items .price-input").forEach(el => {
+    delete el.dataset.locked;
+    });
     const rate = getRate();
     discountRate.innerText = rate.toFixed(4);
 
@@ -312,6 +316,7 @@ addItem();
 
 </body>
 </html>
+
 
 
 
