@@ -43,6 +43,21 @@ input {
 
     box-sizing: border-box;   /* ⭐ 關鍵中的關鍵 */
 }
+
+.price-input {
+    width: 80px;
+    height: 38px;
+    padding: 6px 10px;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+
+    border-radius: 10px;
+    border: 1px solid #d1d1d6;
+    background: #fafafa;
+
+    box-sizing: border-box;
+}
 .header, .row {
     display: flex;
     gap: 6px;
@@ -236,11 +251,11 @@ function calculate() {
     itemRows.forEach(r => {
         const original = Number(r.children[2].value);
         const basePrice = Math.round(original * rate);
-        const priceEl = r.querySelector(".price");
+        const priceEl = r.querySelector(".price-input");
         if (!priceEl.dataset.locked) {
-            priceEl.innerText = basePrice + sharePerItem;
+            priceEl.value = basePrice + sharePerItem;
         }
-        groupSum += Number(priceEl.innerText);
+        groupSum += Number(priceEl.value);
     });
 
     const checkoutVal = Number(bundlePrice.value) - Number(coupon.value);
@@ -297,6 +312,7 @@ addItem();
 
 </body>
 </html>
+
 
 
 
