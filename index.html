@@ -155,7 +155,7 @@ button.delete {
 
 <body>
 
-<h2>📦 Yuna 團購湊團計算器Ver1.2<br>💩 By 璐璐璐</h2>
+<h2>📦 Yuna 團購湊團計算器Ver1.1<br>💩 By 璐璐璐</h2>
 
 <!-- 折數 -->
 <div class="section">
@@ -212,6 +212,7 @@ button.delete {
 </div>
 
 <script>
+let groupSumWithoutGifts = 0;
 function getRate() {
   return bundleOriginal.value > 0
     ? (bundlePrice.value - coupon.value) / bundleOriginal.value
@@ -284,7 +285,7 @@ function calculate(forceRecalc = false) {
     }
     groupSum += Number(priceEl.value);
   });
-  const groupSumWithoutGifts = groupSum - giftSharedTotal;
+  groupSumWithoutGifts = groupSum - giftSharedTotal;
   const checkoutVal = Number(bundlePrice.value) - Number(coupon.value);
   // ⭐ 關鍵修改：只加「勾選平均折入」的贈品
   const sharedGiftAmount = Math.abs(giftSharedTotal);
@@ -338,12 +339,12 @@ function copyText() {
   navigator.clipboard.writeText(text);
   alert("已複製，可直接貼到社群！");
 }
-  addItem();
 
 </script>
 
 </body>
 </html>
+
 
 
 
