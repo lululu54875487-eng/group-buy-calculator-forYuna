@@ -155,7 +155,7 @@ button.delete {
 
 <body>
 
-<h2>📦 Yuna 團購湊團計算器Ver1.1<br>💩 By 璐璐璐</h2>
+<h2>📦 Yuna 團購湊團計算器Ver1.2<br>💩 By 璐璐璐</h2>
 
 <!-- 折數 -->
 <div class="section">
@@ -195,8 +195,8 @@ button.delete {
   <b>贈品</b>
   <div class="header">
     <div class="no">#</div>
-    <div>贈品名稱</div>
-    <div>金額</div>
+    <div style="flex:1">贈品名稱</div>
+    <div style="flex:1">金額</div>
     <div>平均折入</div>
   </div>
   <div id="gifts"></div>
@@ -206,7 +206,7 @@ button.delete {
 <!-- 總計 -->
 <div class="section">
   <div class="highlight">主購實際結帳金額：<span id="checkout">0</span></div>
-  <div class="highlight">湊團總價：<span id="groupTotal">0</span> <span id="checkMark"></span></div>
+  <div class="highlight">湊團總價：<span id="groupSumWithoutGifts">0</span> <span id="checkMark"></span></div>
   <br>
   <button onclick="copyText()">📋 一鍵複製認購清單</button>
 </div>
@@ -265,7 +265,7 @@ function calculate(forceRecalc = false) {
   giftRows.forEach(r => {
     const amount = Number(r.children[2].value);
     const shared = r.children[3].checked;
-    if (shared) giftSharedTotal += amount;
+    if (shared) giftSharedTotal -= amount;
   });
 
   const sharePerItem = itemRows.length
@@ -339,3 +339,4 @@ function copyText() {
 
 </body>
 </html>
+
