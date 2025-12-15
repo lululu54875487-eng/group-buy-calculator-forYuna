@@ -173,11 +173,14 @@ function addItem() {
         <div class="no"></div>
         <input placeholder="品項名稱">
         <input type="number" placeholder="原價" oninput="calculate()">
-        <div class="adjust">
-            <button onclick="adjust(this,-1)">−</button>
-            <div class="price">0</div>
-            <button onclick="adjust(this,1)">＋</button>
-        </div>
+        <input
+  type="number"
+  class="price-input"
+  value="0"
+  min="0"
+  oninput="this.dataset.locked='1'; calculate()"
+/>
+        
         <button class="delete" onclick="this.parentElement.remove(); calculate()">✖</button>
     `;
     items.appendChild(r);
@@ -294,5 +297,6 @@ addItem();
 
 </body>
 </html>
+
 
 
