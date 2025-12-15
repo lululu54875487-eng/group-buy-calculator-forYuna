@@ -85,7 +85,32 @@ button.delete {
 
   /* ===== 手機版欄位修正 ===== */
 @media (max-width: 480px) {
+ #gifts .header {
+    display: grid;
+    grid-template-columns: 26px 1fr;
+    grid-template-rows: auto auto;
+    row-gap: 4px;
+ }
 
+  /* 第一行 */
+  #gifts .header div:nth-child(1) { grid-row: 1; } /* # */
+  #gifts .header div:nth-child(2) { grid-row: 1; } /* 贈品名稱 */
+
+  /* 第二行 */
+  #gifts .header div:nth-child(3) {
+    grid-row: 2;
+    grid-column: 2;
+    font-size: 12px;
+    color: #6e6e73;
+  }
+
+  #gifts .header div:nth-child(4) {
+    grid-row: 2;
+    grid-column: 2;
+    justify-self: end;
+    font-size: 12px;
+    color: #6e6e73;
+  }
   .header,
   .row {
     display: grid;
@@ -302,6 +327,7 @@ function copyText() {
 
 </body>
 </html>
+
 
 
 
