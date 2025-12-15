@@ -82,6 +82,37 @@ button.delete {
   font-size: 16px;
   font-weight: 600;
 }
+
+  /* ===== 手機版欄位修正 ===== */
+@media (max-width: 480px) {
+
+  .header,
+  .row {
+    display: grid;
+    grid-template-columns: 26px 1fr 70px 64px auto;
+    gap: 6px;
+    align-items: center;
+  }
+
+  /* 贈品欄位（沒有團購價，多一個 checkbox） */
+  #gifts .header,
+  #gifts .row {
+    grid-template-columns: 26px 1fr 70px 64px auto;
+  }
+
+  .price-input {
+    width: 64px;
+    padding: 4px;
+  }
+
+  input[type="checkbox"] {
+    transform: scale(1.2);
+  }
+
+  button.delete {
+    padding: 6px;
+  }
+}
 </style>
 </head>
 
@@ -127,8 +158,8 @@ button.delete {
   <b>贈品</b>
   <div class="header">
     <div class="no">#</div>
-    <div style="flex:1">贈品名稱</div>
-    <div style="flex:1">金額</div>
+    <div>贈品名稱</div>
+    <div>金額</div>
     <div>平均折入</div>
   </div>
   <div id="gifts"></div>
@@ -271,3 +302,4 @@ function copyText() {
 
 </body>
 </html>
+
