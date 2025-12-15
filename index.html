@@ -247,12 +247,12 @@ function calculate(forceRecalc = false) {
     }
     groupSum += Number(priceEl.value);
   });
-
+  const groupSumWithoutGifts = groupSum - giftSharedTotal;
   const checkoutVal = Number(bundlePrice.value) - Number(coupon.value);
   checkout.innerText = checkoutVal;
   groupTotal.innerText = groupSum;
   checkMark.innerText = checkoutVal === groupSum ? "✅" : "❌";
-
+  
   renumber();
 }
 
@@ -291,7 +291,7 @@ function copyText() {
   text += `
 主購實際結帳金額💰${checkout.innerText}
 `;
-  text += `湊團總價💰${groupTotal.innerText}${checkout.innerText === groupTotal.innerText ? "✅" : ""}
+  text += `湊團總價💰${groupSumWithoutGifts.innerText}${checkout.innerText === groupSumWithoutGifts.innerText ? "✅" : ""}
 `;
   text += `⭐️請在箭頭➡️後方打上名字認購`;
 
@@ -302,4 +302,5 @@ function copyText() {
 
 </body>
 </html>
+
 
