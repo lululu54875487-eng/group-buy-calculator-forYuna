@@ -103,6 +103,32 @@ button.delete {
 
 .ok { color: green; }
 .ng { color: #d63333; }
+
+/* 調整 +/- 按鈕手機尺寸 */
+.adjust button {
+    width: 26px;
+    height: 26px;
+    font-size: 14px;
+    line-height: 26px;
+    padding: 0;
+}
+
+/* 團購價顯示縮小 */
+.price {
+    width: 56px;
+    font-size: 14px;
+}
+
+/* 列在手機不要太擠 */
+.row input {
+    font-size: 13px;
+}
+
+/* 防止按鈕被 iOS 放大 */
+button {
+    touch-action: manipulation;
+}
+    
 </style>
 </head>
 
@@ -204,7 +230,9 @@ function adjust(btn, delta) {
     const priceEl = btn.parentElement.querySelector(".price");
     let v = Number(priceEl.innerText) + delta;
     if (v < 0) v = 0;
+
     priceEl.innerText = v;
+    priceEl.dataset.locked = "1";   // ⭐ 鎖定
     calculate();
 }
 
@@ -310,6 +338,7 @@ addItem();
 
 </body>
 </html>
+
 
 
 
