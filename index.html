@@ -218,7 +218,7 @@ function addGift() {
         <input placeholder="贈品名稱">
         <input type="number" placeholder="金額" oninput="calculate()">
         <label style="font-size:12px;">
-            <input type="checkbox" onchange="calculate()"> 平均折入
+            <input type="checkbox" onchange="calculate(true)"> 平均折入
         </label>
         <button class="delete" onclick="this.parentElement.remove(); calculate()">✖</button>
     `;
@@ -226,7 +226,7 @@ function addGift() {
     renumber();
 }
 
-function calculate() {
+function calculate(forceRecalc = false) {
     // ⭐ 若平均折入有變動，解除所有團購價鎖定
     document.querySelectorAll("#items .price-input").forEach(el => {
     delete el.dataset.locked;
@@ -256,7 +256,7 @@ function calculate() {
         const original = Number(r.children[2].value);
         const basePrice = Math.round(original * rate);
         const priceEl = r.querySelector(".price-input");
-        if (!priceEl.dataset.locked) {
+        if (forceRecalc || !priceEl.dataset.locked) {
             priceEl.value = basePrice + sharePerItem;
         }
         groupSum += Number(priceEl.value);
@@ -316,6 +316,7 @@ addItem();
 
 </body>
 </html>
+
 
 
 
