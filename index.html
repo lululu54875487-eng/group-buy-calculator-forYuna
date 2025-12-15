@@ -21,8 +21,9 @@ h2 { text-align: center; }
 
 .grid3 {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;              /* 明顯拉開距離 */
+    margin-top: 6px;
 }
 
 .label {
@@ -32,10 +33,15 @@ h2 { text-align: center; }
 
 input {
     width: 100%;
-    padding: 8px;
+    height: 38px;
+    padding: 6px 10px;
     font-size: 15px;
-}
+    border-radius: 10px;
+    border: 1px solid #d1d1d6;
+    background: #fafafa;
 
+    box-sizing: border-box;   /* ⭐ 關鍵中的關鍵 */
+}
 .header, .row {
     display: flex;
     gap: 6px;
@@ -287,3 +293,4 @@ addItem();
 
 </body>
 </html>
+
