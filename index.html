@@ -206,7 +206,7 @@ button.delete {
 <!-- 總計 -->
 <div class="section">
   <div class="highlight">主購實際結帳金額：<span id="checkout">0</span></div>
-  <div class="highlight">湊團總價：<span id="groupSumWithoutGifts">0</span> <span id="checkMark"></span></div>
+  <div class="highlight">湊團總價：<span id="groupTotal">0</span> <span id="checkMark"></span></div>
   <br>
   <button onclick="copyText()">📋 一鍵複製認購清單</button>
 </div>
@@ -333,7 +333,7 @@ function copyText() {
   text += `
 主購實際結帳金額💰${checkout.innerText}
 `;
-  text += `湊團總價💰${groupSumWithoutGifts.innerText}${checkout.innerText === groupSumWithoutGifts.innerText ? "✅" : ""}
+  text += `湊團總價💰${groupTotal.innerText}${checkout.innerText === groupTotal.innerText ? "✅" : ""}
 `;
   text += `⭐️請在箭頭➡️後方打上名字認購`;
 
@@ -345,6 +345,7 @@ function copyText() {
 
 </body>
 </html>
+
 
 
 
