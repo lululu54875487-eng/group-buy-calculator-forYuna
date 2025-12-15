@@ -219,8 +219,12 @@ function calculate(forceRecalc = false) {
 
   const checkoutVal = Number(bundlePrice.value) - Number(coupon.value);
   checkout.innerText = checkoutVal;
-  groupTotal.innerText = groupSum;
-  checkMark.innerText = checkoutVal === groupSum ? "✅" : "❌";
+  // 湊團總價固定以原本計算結果顯示，不受平均折入影響
+  if (!calculate.fixedGroupTotal) {
+    calculate.fixedGroupTotal = groupSum;
+  }
+  groupTotal.innerText = calculate.fixedGroupTotal;
+  checkMark.innerText = checkoutVal === calculate.fixedGroupTotal ? "✅" : "❌";
 
   renumber();
 }
