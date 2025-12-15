@@ -155,7 +155,7 @@ button.delete {
 
 <body>
 
-<h2>📦 Yuna 團購湊團計算器Ver1.2<br>💩 By 璐璐璐</h2>
+<h2>📦 Yuna 團購湊團計算器Ver1.1<br>💩 By 璐璐璐</h2>
 
 <!-- 折數 -->
 <div class="section">
@@ -206,7 +206,7 @@ button.delete {
 <!-- 總計 -->
 <div class="section">
   <div class="highlight">主購實際結帳金額：<span id="checkout">0</span></div>
-  <div class="highlight">湊團總價：<span id="groupSumWithoutGifts">0</span> <span id="checkMark"></span></div>
+  <div class="highlight">湊團總價：<span id="groupTotal">0</span> <span id="checkMark"></span></div>
   <br>
   <button onclick="copyText()">📋 一鍵複製認購清單</button>
 </div>
@@ -286,9 +286,12 @@ function calculate(forceRecalc = false) {
   });
   const groupSumWithoutGifts = groupSum - giftSharedTotal;
   const checkoutVal = Number(bundlePrice.value) - Number(coupon.value);
+  // ⭐ 關鍵修改：只加「勾選平均折入」的贈品
+  const sharedGiftAmount = Math.abs(giftSharedTotal);
+  const displayGroupTotal = groupSum + sharedGiftAmount;
   checkout.innerText = checkoutVal;
-  groupTotal.innerText = groupSum;
-  checkMark.innerText = checkoutVal === groupSum ? "✅" : "❌";
+  groupTotal.innerText = displayGroupTotal ;
+  checkMark.innerText = checkoutVal === displayGroupTotal ? "✅" : "❌";
   
   renumber();
 }
@@ -339,4 +342,5 @@ function copyText() {
 
 </body>
 </html>
+
 
