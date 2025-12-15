@@ -150,12 +150,24 @@ button.delete {
     padding: 6px;
   }
 }
+  /* ===== 贈品（桌機）欄位對齊 ===== */
+#gifts .header,
+#gifts .row {
+  display: grid;
+  grid-template-columns: 32px 2fr 1fr 90px auto;
+  column-gap: 12px;
+  align-items: center;
+}
+
+  #gifts .row input[type="checkbox"] {
+  justify-self: center;
+}
 </style>
 </head>
 
 <body>
 
-<h2>📦 Yuna 團購湊團計算器Ver1.1<br>💩 By 璐璐璐</h2>
+<h2>📦 Yuna 團購湊團計算器Ver1.2<br>💩 By 璐璐璐</h2>
 
 <!-- 折數 -->
 <div class="section">
@@ -273,7 +285,7 @@ function calculate(forceRecalc = false) {
     : 0;
 
   let groupSum = 0;
-
+  let groupItemTotal = 0; // 只計算團購價
   itemRows.forEach(r => {
     const original = Number(r.children[2].value);
     const basePrice = Math.round(original * rate);
@@ -283,11 +295,12 @@ function calculate(forceRecalc = false) {
       priceEl.value = basePrice + sharePerItem;
     }
     groupSum += Number(priceEl.value);
+    groupItemTotal += itemPrice;    // ⭐ 新的，只算團購價
   });
   const groupSumWithoutGifts = groupSum - giftSharedTotal;
   const checkoutVal = Number(bundlePrice.value) - Number(coupon.value);
   checkout.innerText = checkoutVal;
-  groupTotal.innerText = groupSum;
+  groupTotal.innerText = groupItemTotal;
   checkMark.innerText = checkoutVal === groupSum ? "✅" : "❌";
   
   renumber();
@@ -339,6 +352,7 @@ function copyText() {
 
 </body>
 </html>
+
 
 
 
