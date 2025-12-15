@@ -21,20 +21,22 @@ h2,h4{text-align:center;margin:6px 0}
     margin-bottom:14px;
 }
 
+/* 調整上方三欄寬度，避免邊框重疊 */
 .grid3{
     display:grid;
     grid-template-columns:repeat(3,1fr);
-    gap:8px;
+    gap:12px; /* 原本 8px → 加大 */
 }
 
 .label{font-size:12px;color:#8e8e93}
 input{
     width:100%;
-    height:34px;
+    height:32px; /* 稍微縮小高度 */
     font-size:14px;
-    padding:4px 6px;
+    padding:4px 8px;
     border-radius:8px;
     border:1px solid #d1d1d6;
+    box-sizing:border-box; /* 關鍵：避免寬度計算錯誤 */
 }
 
 .header,.row{
@@ -47,7 +49,6 @@ input{
 
 .no{width:22px;text-align:center}
 .price{width:50px;text-align:center;font-weight:600}
-.diff{width:50px;font-size:11px;color:#666;text-align:center}
 
 .adjust{
     display:flex;
@@ -102,7 +103,6 @@ button.unlock{background:#34c759}
 <div style="flex:1">名稱</div>
 <div style="flex:1">原價</div>
 <div class="price">團購</div>
-<div class="diff">差額</div>
 </div>
 <div id="items"></div>
 <button onclick="addItem()">➕ 新增品項</button>
@@ -135,7 +135,6 @@ function addItem(data={}){
         <div class="price">${data.price||0}</div>
         <button onmousedown="hold(this,1)" onmouseup="clearHold()" ontouchstart="hold(this,1)" ontouchend="clearHold()">＋</button>
     </div>
-    <div class="diff">0</div>
     <button class="unlock" onclick="unlock(this)">🔓</button>
     <button class="delete" onclick="this.parentElement.remove();save();calculate()">✖</button>
     `;
@@ -176,11 +175,6 @@ function calculate(){
         const auto=Math.round(original*rate);
         const priceEl=r.querySelector(".price");
         if(!priceEl.dataset.locked) priceEl.innerText=auto;
-
-        const diff=r.querySelector(".diff");
-        const d=priceEl.innerText-auto;
-        diff.innerText=d===0?"0":(d>0?`+${d}`:d);
-
         sum+=Number(priceEl.innerText);
     });
 
