@@ -87,7 +87,7 @@ button.delete {
 
 <body>
 
-<h2>📦 Yuna 團購湊團計算器Ver1.0<br>💩 By 璐璐璐</h2>
+<h2>📦 Yuna 團購湊團計算器<br>💩 By 璐璐璐</h2>
 
 <!-- 折數 -->
 <div class="section">
@@ -219,12 +219,8 @@ function calculate(forceRecalc = false) {
 
   const checkoutVal = Number(bundlePrice.value) - Number(coupon.value);
   checkout.innerText = checkoutVal;
-  // 湊團總價固定以原本計算結果顯示，不受平均折入影響
-  if (!calculate.fixedGroupTotal) {
-    calculate.fixedGroupTotal = groupSum;
-  }
-  groupTotal.innerText = calculate.fixedGroupTotal;
-  checkMark.innerText = checkoutVal === calculate.fixedGroupTotal ? "✅" : "❌";
+  groupTotal.innerText = groupSum;
+  checkMark.innerText = checkoutVal === groupSum ? "✅" : "❌";
 
   renumber();
 }
@@ -275,4 +271,3 @@ function copyText() {
 
 </body>
 </html>
-
