@@ -300,7 +300,9 @@ function calculate(forceRecalc = false) {
 addItem();
 
 function copyText() {
+ 
   calculate(); // ⭐⭐⭐ 這一行一定要有
+  console.log("groupSumWithoutGifts =", groupSumWithoutGifts);
   let text = `📦 湊團認購清單
 
 `;
@@ -333,7 +335,7 @@ function copyText() {
   text += `
 主購實際結帳金額💰${checkout.innerText}
 `;
-  text += `湊團總價💰${groupSumWithoutGifts.innerText}${checkout.innerText === groupSumWithoutGifts.innerText ? "✅" : ""}
+  text += `湊團總價💰${groupSumWithoutGifts}${Number(checkout.innerText) === groupSumWithoutGifts ? "✅" : ""}
 `;
   text += `⭐️請在箭頭➡️後方打上名字認購`;
 
@@ -345,6 +347,7 @@ function copyText() {
 
 </body>
 </html>
+
 
 
 
