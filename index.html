@@ -131,11 +131,9 @@ button.delete {
     align-items: center;
   }
 
-  /* 贈品/加購品 欄位（沒有團購價，多一個 checkbox / 固定價） */
+  /* 贈品欄位（沒有團購價，多一個 checkbox） */
   #gifts .header,
-  #gifts .row,
-  #addons .header,
-  #addons .row {
+  #gifts .row {
     grid-template-columns: 26px 1fr 70px 64px auto;
   }
 
@@ -157,8 +155,9 @@ button.delete {
 
 <body>
 
-<h2>📦 Yuna 團購湊團計算器Ver1.2<br>💩 By 璐璐璐</h2>
+<h2>📦 Yuna 團購湊團計算器Ver1.1<br>💩 By 璐璐璐</h2>
 
+<!-- 折數 -->
 <div class="section">
   <b>優惠折數</b>
   <div class="grid3">
@@ -178,8 +177,9 @@ button.delete {
   <div>折數：<b id="discountRate">0</b></div>
 </div>
 
+<!-- 團購品項 -->
 <div class="section">
-  <b>團購品項 (價格隨折數變動)</b>
+  <b>團購品項</b>
   <div class="header">
     <div class="no">#</div>
     <div style="flex:1">品項名稱</div>
@@ -190,19 +190,7 @@ button.delete {
   <button onclick="addItem()">➕ 新增品項</button>
 </div>
 
-<div class="section">
-  <b>加購品項 (固定金額)</b>
-  <div class="header">
-    <div class="no">#</div>
-    <div style="flex:1">品項名稱</div>
-    <div style="flex:1">金額</div>
-    <div>湊團價</div>
-  </div>
-  <div id="addons"></div>
-  <button onclick="addAddon()">➕ 新增加購品</button>
-</div>
-
-
+<!-- 贈品 -->
 <div class="section">
   <b>贈品</b>
   <div class="header">
@@ -215,6 +203,7 @@ button.delete {
   <button onclick="addGift()">➕ 新增贈品</button>
 </div>
 
+<!-- 總計 -->
 <div class="section">
   <div class="highlight">主購實際結帳金額：<span id="checkout">0</span></div>
   <div class="highlight">湊團總價：<span id="groupTotal">0</span> <span id="checkMark"></span></div>
@@ -225,20 +214,14 @@ button.delete {
 <script>
 let groupSumWithoutGifts = 0;
 function getRate() {
-  const original = Number(bundleOriginal.value) || 0;
-  const actualPrice = (Number(bundlePrice.value) || 0) - (Number(coupon.value) || 0);
-  return original > 0
-    ? actualPrice / original
+  return bundleOriginal.value > 0
+    ? (bundlePrice.value - coupon.value) / bundleOriginal.value
     : 0;
 }
 
 function renumber() {
   let i = 1;
-  // 團購品項
   document.querySelectorAll("#items .row").forEach(r => r.querySelector(".no").innerText = i++);
-  // 加購品項
-  document.querySelectorAll("#addons .row").forEach(r => r.querySelector(".no").innerText = i++);
-  // 贈品
   document.querySelectorAll("#gifts .row").forEach(r => r.querySelector(".no").innerText = i++);
 }
 
@@ -250,26 +233,10 @@ function addItem() {
     <input placeholder="品項名稱" />
     <input type="number" placeholder="原價" oninput="calculate()" />
     <input type="number" class="price-input" value="0" min="0"
-      oninput="this.dataset.locked='1'; calculate()" />
+      oninput="this.dataset.locked='1'" />
     <button class="delete" onclick="this.parentElement.remove(); calculate()">✖</button>
   `;
   items.appendChild(r);
-  renumber();
-  calculate();
-}
-
-// 📌 新增加購品函式
-function addAddon() {
-  const r = document.createElement("div");
-  r.className = "row";
-  r.innerHTML = `
-    <div class="no"></div>
-    <input placeholder="品項名稱" />
-    <input type="number" placeholder="金額" value="0" oninput="calculate()" />
-    <input type="number" class="price-input" value="0" readonly style="border:none; background:none; font-weight:600;" />
-    <button class="delete" onclick="this.parentElement.remove(); calculate()">✖</button>
-  `;
-  addons.appendChild(r);
   renumber();
   calculate();
 }
@@ -286,7 +253,6 @@ function addGift() {
   `;
   gifts.appendChild(r);
   renumber();
-  calculate(); // 確保新增後會更新計算
 }
 
 function calculate(forceRecalc = false) {
@@ -295,11 +261,10 @@ function calculate(forceRecalc = false) {
 
   const itemRows = document.querySelectorAll("#items .row");
   const giftRows = document.querySelectorAll("#gifts .row");
-  const addonRows = document.querySelectorAll("#addons .row"); // 取得加購品
 
   let giftSharedTotal = 0;
   giftRows.forEach(r => {
-    const amount = Number(r.children[2].value) || 0;
+    const amount = Number(r.children[2].value);
     const shared = r.children[3].checked;
     if (shared) giftSharedTotal -= amount;
   });
@@ -309,11 +274,9 @@ function calculate(forceRecalc = false) {
     : 0;
 
   let groupSum = 0;
-  let addonTotal = 0; // 加購品總金額
 
-  // 1. 計算團購品項 (受折數及贈品分攤影響)
   itemRows.forEach(r => {
-    const original = Number(r.children[2].value) || 0;
+    const original = Number(r.children[2].value);
     const basePrice = Math.round(original * rate);
     const priceEl = r.querySelector(".price-input");
 
@@ -322,30 +285,15 @@ function calculate(forceRecalc = false) {
     }
     groupSum += Number(priceEl.value);
   });
-
-  // 2. 計算加購品項 (固定金額，不變動)
-  addonRows.forEach(r => {
-    const amount = Number(r.children[2].value) || 0;
-    r.querySelector(".price-input").value = amount; // 設定湊團價 = 金額
-    addonTotal += amount;
-  });
-  
-  // 3. 計算總計
-  
-  // 主購實際結帳金額：優惠組合金額 - 折扣碼
-  const checkoutVal = (Number(bundlePrice.value) || 0) - (Number(coupon.value) || 0);
-  
-  // 湊團總價：所有湊團金額 (品項 + 加購品) + 勾選平均折入的贈品金額 (抵銷/加回)
+  groupSumWithoutGifts = groupSum - giftSharedTotal;
+  const checkoutVal = Number(bundlePrice.value) - Number(coupon.value);
+  // ⭐ 關鍵修改：只加「勾選平均折入」的贈品
   const sharedGiftAmount = Math.abs(giftSharedTotal);
-  const displayGroupTotal = groupSum + sharedGiftAmount + addonTotal;
-  
+  const displayGroupTotal = groupSum + sharedGiftAmount;
   checkout.innerText = checkoutVal;
   groupTotal.innerText = displayGroupTotal ;
   checkMark.innerText = checkoutVal === displayGroupTotal ? "✅" : "❌";
   
-  // 複製清單用的總價 (不含贈品，應等於 checkoutVal)
-  groupSumWithoutGifts = groupSum - giftSharedTotal + addonTotal;
-
   renumber();
 }
 
@@ -353,7 +301,8 @@ addItem();
 
 function copyText() {
  
-  calculate(); // 確保所有數值是最新的
+  calculate(); // ⭐⭐⭐ 這一行一定要有
+  console.log("groupSumWithoutGifts =", groupSumWithoutGifts);
   let text = `📦 湊團認購清單
 
 `;
@@ -368,7 +317,6 @@ function copyText() {
 
   let i = 1;
 
-  // 複製團購品項
   document.querySelectorAll("#items .row").forEach(r => {
     const name = r.children[1].value || "（未填寫）";
     const price = r.querySelector(".price-input").value;
@@ -376,15 +324,6 @@ function copyText() {
 `;
   });
 
-  // 📌 複製加購品項
-  document.querySelectorAll("#addons .row").forEach(r => {
-    const name = r.children[1].value || "（未填寫）";
-    const price = r.children[2].value; // 直接取金額欄位
-    text += `${i++}. 加購：${name} $${price} ➡️
-`;
-  });
-
-  // 複製贈品
   document.querySelectorAll("#gifts .row").forEach(r => {
     const name = r.children[1].value || "（未填寫）";
     const amount = r.children[2].value || 0;
@@ -396,7 +335,6 @@ function copyText() {
   text += `
 主購實際結帳金額💰${checkout.innerText}
 `;
-  // 顯示湊團總價 (不包含「平均折入」的贈品金額)
   text += `湊團總價💰${groupSumWithoutGifts}${Number(checkout.innerText) === groupSumWithoutGifts ? "✅" : ""}
 `;
   text += `⭐️請在箭頭➡️後方打上名字認購`;
