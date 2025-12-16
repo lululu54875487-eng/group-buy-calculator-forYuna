@@ -352,89 +352,59 @@ function calculate(forceRecalc = false) {
 addItem();
 
 function copyText() {
-
- 
-
-  calculate(); // ⭐⭐⭐ 這一行一定要有
-
-  console.log("groupSumWithoutGifts =", groupSumWithoutGifts);
-
-  let text = `📦 湊團認購清單
-
-
+ 
+  calculate(); // ⭐⭐⭐ 這一行一定要有
+  console.log("groupSumWithoutGifts =", groupSumWithoutGifts);
+  let text = `📦 湊團認購清單
 
 `;
 
-
-
-  text += `優惠組合金額💰${bundlePrice.value || 0}
+  text += `優惠組合金額💰${bundlePrice.value || 0}
+`;
+  text += `折扣碼💰${coupon.value || 0}
+`;
+  text += `折數：${discountRate.innerText}
 
 `;
 
-  text += `折扣碼💰${coupon.value || 0}
+  let i = 1;
 
+  // 1. 團購品項
+  document.querySelectorAll("#items .row").forEach(r => {
+    const name = r.children[1].value || "（未填寫）";
+    const price = r.querySelector(".price-input").value;
+    text += `${i++}. ${name} $${price} ➡️
 `;
-
-  text += `折數：${discountRate.innerText}
-
-
-
+  });
+  
+  // 2. 【新增】加購品項目
+  document.querySelectorAll("#additionalItems .row").forEach(r => {
+    const name = r.children[1].value || "（未填寫）";
+    // 這裡使用 r.children[2] 取得價格欄位的值
+    const price = r.children[2].value || 0; 
+    text += `${i++}. 【加購】${name} $${price} ➡️
 `;
+  });
 
-
-
-  let i = 1;
-
-
-
-  document.querySelectorAll("#items .row").forEach(r => {
-
-    const name = r.children[1].value || "（未填寫）";
-
-    const price = r.querySelector(".price-input").value;
-
-    text += `${i++}. ${name} $${price} ➡️
-
+  // 3. 贈品項目
+  document.querySelectorAll("#gifts .row").forEach(r => {
+    const name = r.children[1].value || "（未填寫）";
+    const amount = r.children[2].value || 0;
+    const shared = r.children[3].checked;
+    text += `${i++}. 贈品：${name} $${amount}${shared ? "（平均折入）" : ""} ➡️
 `;
+  });
 
-  });
-
-
-
-  document.querySelectorAll("#gifts .row").forEach(r => {
-
-    const name = r.children[1].value || "（未填寫）";
-
-    const amount = r.children[2].value || 0;
-
-    const shared = r.children[3].checked;
-
-    text += `${i++}. 贈品：${name} $${amount}${shared ? "（平均折入）" : ""} ➡️
-
-`;
-
-  });
-
-
-
-  text += `
-
+  text += `
 主購實際結帳金額💰${checkout.innerText}
-
 `;
-
-  text += `湊團總價💰${groupSumWithoutGifts}${Number(checkout.innerText) === groupSumWithoutGifts ? "✅" : ""}
-
+  // 注意：此處需使用顯示的湊團總價 groupTotal.innerText 來做最終檢查比對，而不是 groupSumWithoutGifts
+  text += `湊團總價💰${groupTotal.innerText}${document.getElementById('checkMark').innerText === '✅' ? "✅" : "❌"}
 `;
+  text += `⭐️請在箭頭➡️後方打上名字認購`;
 
-  text += `⭐️請在箭頭➡️後方打上名字認購`;
-
-
-
-  navigator.clipboard.writeText(text);
-
-  alert("已複製，可直接貼到社群！");
-
+  navigator.clipboard.writeText(text);
+  alert("已複製，可直接貼到社群！");
 }
 
 
@@ -443,6 +413,7 @@ function copyText() {
 
 </body>
 </html>
+
 
 
 
