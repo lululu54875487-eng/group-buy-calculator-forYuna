@@ -7,355 +7,405 @@
 
 <style>
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", sans-serif;
-  background: #f6f7f9;
-  padding: 12px;
-  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", sans-serif;
+  background: #f6f7f9;
+  padding: 12px;
+  margin: 0;
 }
 
 h2 { text-align: center; margin: 6px 0 12px; }
 
 .section {
-  background: #fff;
-  padding: 14px;
-  border-radius: 14px;
-  margin-bottom: 14px;
+  background: #fff;
+  padding: 14px;
+  border-radius: 14px;
+  margin-bottom: 14px;
 }
 
 .grid3 {
-  display: grid;
-  gap: 12px;
+  display: grid;
+  gap: 12px;
 }
 @media (min-width: 640px) {
-  .grid3 { grid-template-columns: repeat(3, 1fr); }
+  .grid3 { grid-template-columns: repeat(3, 1fr); }
 }
 
 .label {
-  font-size: 12px;
-  color: #6e6e73;
-  margin-bottom: 4px;
+  font-size: 12px;
+  color: #6e6e73;
+  margin-bottom: 4px;
 }
 
 input {
-  width: 100%;
-  height: 38px;
-  padding: 6px 10px;
-  font-size: 15px;
-  border-radius: 10px;
-  border: 1px solid #d1d1d6;
-  background: #fafafa;
-  box-sizing: border-box;
+  width: 100%;
+  height: 38px;
+  padding: 6px 10px;
+  font-size: 15px;
+  border-radius: 10px;
+  border: 1px solid #d1d1d6;
+  background: #fafafa;
+  box-sizing: border-box;
 }
 
 .header, .row {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  margin-bottom: 8px;
-  font-size: 14px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 14px;
 }
 
 .header div { font-weight: 600; }
 
 .no { width: 26px; text-align: center; }
 .price-input {
-  width: 90px;
-  text-align: center;
-  font-weight: 600;
+  width: 90px;
+  text-align: center;
+  font-weight: 600;
 }
 
 button {
-  padding: 8px 10px;
-  font-size: 14px;
-  border: none;
-  border-radius: 10px;
-  background: #4a6cf7;
-  color: #fff;
+  padding: 8px 10px;
+  font-size: 14px;
+  border: none;
+  border-radius: 10px;
+  background: #4a6cf7;
+  color: #fff;
 }
 
 button.delete {
-  background: #e5e5ea;
-  color: #333;
+  background: #e5e5ea;
+  color: #333;
 }
 
 .highlight {
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 600;
 }
 
-  /* ===== 手機版欄位修正 ===== */
+  /* ===== 手機版欄位修正 ===== */
 @media (max-width: 480px) {
-  /* 隱藏贈品 header 的「平均折入」 */
-  #gifts .header div:nth-child(4) {
-    display: none;
-  }
+  /* 隱藏贈品 header 的「平均折入」 */
+  #gifts .header div:nth-child(4) {
+    display: none;
+  }
 /* checkbox 容器定位 */
-  #gifts .row input[type="checkbox"] {
-    position: relative;
-    margin-top: 14px;
-  }
-   /* checkbox 上方的文字 */
-  #gifts .row input[type="checkbox"]::before {
-    position: absolute;
-    top: -14px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 11px;
-    color: #6e6e73;
-    white-space: nowrap;
-  }
-  /* 第一行 */
-  #gifts .header div:nth-child(1) { grid-row: 1; } /* # */
-  #gifts .header div:nth-child(2) { grid-row: 1; } /* 贈品名稱 */
+  #gifts .row input[type="checkbox"] {
+    position: relative;
+    margin-top: 14px;
+  }
+   /* checkbox 上方的文字 */
+  #gifts .row input[type="checkbox"]::before {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    color: #6e6e73;
+    white-space: nowrap;
+  }
+  /* 第一行 */
+  #gifts .header div:nth-child(1) { grid-row: 1; } /* # */
+  #gifts .header div:nth-child(2) { grid-row: 1; } /* 贈品名稱 */
 
-  /* 第二行 */
-  #gifts .header div:nth-child(3) {
-    grid-row: 2;
-    grid-column: 2;
-    font-size: 12px;
-    color: #6e6e73;
-  }
+  /* 第二行 */
+  #gifts .header div:nth-child(3) {
+    grid-row: 2;
+    grid-column: 2;
+    font-size: 12px;
+    color: #6e6e73;
+  }
 
-  #gifts .header div:nth-child(4) {
-    grid-row: 2;
-    grid-column: 2;
-    justify-self: end;
-    font-size: 12px;
-    color: #6e6e73;
-  }
-  .header,
-  .row {
-    display: grid;
-    grid-template-columns: 26px 1fr 70px 64px auto;
-    gap: 6px;
-    align-items: center;
-  }
+  #gifts .header div:nth-child(4) {
+    grid-row: 2;
+    grid-column: 2;
+    justify-self: end;
+    font-size: 12px;
+    color: #6e6e73;
+  }
+  .header,
+  .row {
+    display: grid;
+    grid-template-columns: 26px 1fr 70px 64px auto;
+    gap: 6px;
+    align-items: center;
+  }
 
-  /* 贈品欄位（沒有團購價，多一個 checkbox） */
-  #gifts .header,
-  #gifts .row {
-    grid-template-columns: 26px 1fr 70px 64px auto;
-  }
+  /* 贈品/加購品 欄位（沒有團購價，多一個 checkbox / 固定價） */
+  #gifts .header,
+  #gifts .row,
+  #addons .header,
+  #addons .row {
+    grid-template-columns: 26px 1fr 70px 64px auto;
+  }
 
-  .price-input {
-    width: 64px;
-    padding: 4px;
-  }
+  .price-input {
+    width: 64px;
+    padding: 4px;
+  }
 
-  input[type="checkbox"] {
-    transform: scale(1.2);
-  }
+  input[type="checkbox"] {
+    transform: scale(1.2);
+  }
 
-  button.delete {
-    padding: 6px;
-  }
+  button.delete {
+    padding: 6px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<h2>📦 Yuna 團購湊團計算器Ver1.1<br>💩 By 璐璐璐</h2>
+<h2>📦 Yuna 團購湊團計算器Ver1.2<br>💩 By 璐璐璐</h2>
 
-<!-- 折數 -->
 <div class="section">
-  <b>優惠折數</b>
-  <div class="grid3">
-    <div>
-      <div class="label">優惠組合金額</div>
-      <input type="number" id="bundlePrice" oninput="calculate()" />
-    </div>
-    <div>
-      <div class="label">折扣碼金額</div>
-      <input type="number" id="coupon" oninput="calculate()" />
-    </div>
-    <div>
-      <div class="label">總原價金額</div>
-      <input type="number" id="bundleOriginal" oninput="calculate()" />
-    </div>
-  </div>
-  <div>折數：<b id="discountRate">0</b></div>
+  <b>優惠折數</b>
+  <div class="grid3">
+    <div>
+      <div class="label">優惠組合金額</div>
+      <input type="number" id="bundlePrice" oninput="calculate()" />
+    </div>
+    <div>
+      <div class="label">折扣碼金額</div>
+      <input type="number" id="coupon" oninput="calculate()" />
+    </div>
+    <div>
+      <div class="label">總原價金額</div>
+      <input type="number" id="bundleOriginal" oninput="calculate()" />
+    </div>
+  </div>
+  <div>折數：<b id="discountRate">0</b></div>
 </div>
 
-<!-- 團購品項 -->
 <div class="section">
-  <b>團購品項</b>
-  <div class="header">
-    <div class="no">#</div>
-    <div style="flex:1">品項名稱</div>
-    <div style="flex:1">原價</div>
-    <div>團購價</div>
-  </div>
-  <div id="items"></div>
-  <button onclick="addItem()">➕ 新增品項</button>
+  <b>團購品項 (價格隨折數變動)</b>
+  <div class="header">
+    <div class="no">#</div>
+    <div style="flex:1">品項名稱</div>
+    <div style="flex:1">原價</div>
+    <div>團購價</div>
+  </div>
+  <div id="items"></div>
+  <button onclick="addItem()">➕ 新增品項</button>
 </div>
 
-<!-- 贈品 -->
 <div class="section">
-  <b>贈品</b>
-  <div class="header">
-    <div class="no">#</div>
-    <div style="flex:1">贈品名稱</div>
-    <div style="flex:1">金額</div>
-    <div>平均折入</div>
-  </div>
-  <div id="gifts"></div>
-  <button onclick="addGift()">➕ 新增贈品</button>
+  <b>加購品項 (固定金額)</b>
+  <div class="header">
+    <div class="no">#</div>
+    <div style="flex:1">品項名稱</div>
+    <div style="flex:1">金額</div>
+    <div>湊團價</div>
+  </div>
+  <div id="addons"></div>
+  <button onclick="addAddon()">➕ 新增加購品</button>
 </div>
 
-<!-- 總計 -->
+
 <div class="section">
-  <div class="highlight">主購實際結帳金額：<span id="checkout">0</span></div>
-  <div class="highlight">湊團總價：<span id="groupTotal">0</span> <span id="checkMark"></span></div>
-  <br>
-  <button onclick="copyText()">📋 一鍵複製認購清單</button>
+  <b>贈品</b>
+  <div class="header">
+    <div class="no">#</div>
+    <div style="flex:1">贈品名稱</div>
+    <div style="flex:1">金額</div>
+    <div>平均折入</div>
+  </div>
+  <div id="gifts"></div>
+  <button onclick="addGift()">➕ 新增贈品</button>
+</div>
+
+<div class="section">
+  <div class="highlight">主購實際結帳金額：<span id="checkout">0</span></div>
+  <div class="highlight">湊團總價：<span id="groupTotal">0</span> <span id="checkMark"></span></div>
+  <br>
+  <button onclick="copyText()">📋 一鍵複製認購清單</button>
 </div>
 
 <script>
 let groupSumWithoutGifts = 0;
 function getRate() {
-  return bundleOriginal.value > 0
-    ? (bundlePrice.value - coupon.value) / bundleOriginal.value
-    : 0;
+  const original = Number(bundleOriginal.value) || 0;
+  const actualPrice = (Number(bundlePrice.value) || 0) - (Number(coupon.value) || 0);
+  return original > 0
+    ? actualPrice / original
+    : 0;
 }
 
 function renumber() {
-  let i = 1;
-  document.querySelectorAll("#items .row").forEach(r => r.querySelector(".no").innerText = i++);
-  document.querySelectorAll("#gifts .row").forEach(r => r.querySelector(".no").innerText = i++);
+  let i = 1;
+  // 團購品項
+  document.querySelectorAll("#items .row").forEach(r => r.querySelector(".no").innerText = i++);
+  // 加購品項
+  document.querySelectorAll("#addons .row").forEach(r => r.querySelector(".no").innerText = i++);
+  // 贈品
+  document.querySelectorAll("#gifts .row").forEach(r => r.querySelector(".no").innerText = i++);
 }
 
 function addItem() {
-  const r = document.createElement("div");
-  r.className = "row";
-  r.innerHTML = `
-    <div class="no"></div>
-    <input placeholder="品項名稱" />
-    <input type="number" placeholder="原價" oninput="calculate()" />
-    <input type="number" class="price-input" value="0" min="0"
-      oninput="this.dataset.locked='1'" />
-    <button class="delete" onclick="this.parentElement.remove(); calculate()">✖</button>
-  `;
-  items.appendChild(r);
-  renumber();
-  calculate();
+  const r = document.createElement("div");
+  r.className = "row";
+  r.innerHTML = `
+    <div class="no"></div>
+    <input placeholder="品項名稱" />
+    <input type="number" placeholder="原價" oninput="calculate()" />
+    <input type="number" class="price-input" value="0" min="0"
+      oninput="this.dataset.locked='1'; calculate()" />
+    <button class="delete" onclick="this.parentElement.remove(); calculate()">✖</button>
+  `;
+  items.appendChild(r);
+  renumber();
+  calculate();
+}
+
+// 📌 新增加購品函式
+function addAddon() {
+  const r = document.createElement("div");
+  r.className = "row";
+  r.innerHTML = `
+    <div class="no"></div>
+    <input placeholder="品項名稱" />
+    <input type="number" placeholder="金額" value="0" oninput="calculate()" />
+    <input type="number" class="price-input" value="0" readonly style="border:none; background:none; font-weight:600;" />
+    <button class="delete" onclick="this.parentElement.remove(); calculate()">✖</button>
+  `;
+  addons.appendChild(r);
+  renumber();
+  calculate();
 }
 
 function addGift() {
-  const r = document.createElement("div");
-  r.className = "row";
-  r.innerHTML = `
-    <div class="no"></div>
-    <input placeholder="贈品名稱" />
-    <input type="number" placeholder="金額" oninput="calculate()" />
-    <input type="checkbox" onchange="calculate(true)" />
-    <button class="delete" onclick="this.parentElement.remove(); calculate(true)">✖</button>
-  `;
-  gifts.appendChild(r);
-  renumber();
+  const r = document.createElement("div");
+  r.className = "row";
+  r.innerHTML = `
+    <div class="no"></div>
+    <input placeholder="贈品名稱" />
+    <input type="number" placeholder="金額" oninput="calculate()" />
+    <input type="checkbox" onchange="calculate(true)" />
+    <button class="delete" onclick="this.parentElement.remove(); calculate(true)">✖</button>
+  `;
+  gifts.appendChild(r);
+  renumber();
+  calculate(); // 確保新增後會更新計算
 }
 
 function calculate(forceRecalc = false) {
-  const rate = getRate();
-  discountRate.innerText = rate.toFixed(4);
+  const rate = getRate();
+  discountRate.innerText = rate.toFixed(4);
 
-  const itemRows = document.querySelectorAll("#items .row");
-  const giftRows = document.querySelectorAll("#gifts .row");
+  const itemRows = document.querySelectorAll("#items .row");
+  const giftRows = document.querySelectorAll("#gifts .row");
+  const addonRows = document.querySelectorAll("#addons .row"); // 取得加購品
 
-  let giftSharedTotal = 0;
-  giftRows.forEach(r => {
-    const amount = Number(r.children[2].value);
-    const shared = r.children[3].checked;
-    if (shared) giftSharedTotal -= amount;
-  });
+  let giftSharedTotal = 0;
+  giftRows.forEach(r => {
+    const amount = Number(r.children[2].value) || 0;
+    const shared = r.children[3].checked;
+    if (shared) giftSharedTotal -= amount;
+  });
 
-  const sharePerItem = itemRows.length
-    ? Math.round(giftSharedTotal / itemRows.length)
-    : 0;
+  const sharePerItem = itemRows.length
+    ? Math.round(giftSharedTotal / itemRows.length)
+    : 0;
 
-  let groupSum = 0;
+  let groupSum = 0;
+  let addonTotal = 0; // 加購品總金額
 
-  itemRows.forEach(r => {
-    const original = Number(r.children[2].value);
-    const basePrice = Math.round(original * rate);
-    const priceEl = r.querySelector(".price-input");
+  // 1. 計算團購品項 (受折數及贈品分攤影響)
+  itemRows.forEach(r => {
+    const original = Number(r.children[2].value) || 0;
+    const basePrice = Math.round(original * rate);
+    const priceEl = r.querySelector(".price-input");
 
-    if (forceRecalc || !priceEl.dataset.locked) {
-      priceEl.value = basePrice + sharePerItem;
-    }
-    groupSum += Number(priceEl.value);
-  });
-  groupSumWithoutGifts = groupSum - giftSharedTotal;
-  const checkoutVal = Number(bundlePrice.value) - Number(coupon.value);
-  // ⭐ 關鍵修改：只加「勾選平均折入」的贈品
-  const sharedGiftAmount = Math.abs(giftSharedTotal);
-  const displayGroupTotal = groupSum + sharedGiftAmount;
-  checkout.innerText = checkoutVal;
-  groupTotal.innerText = displayGroupTotal ;
-  checkMark.innerText = checkoutVal === displayGroupTotal ? "✅" : "❌";
-  
-  renumber();
+    if (forceRecalc || !priceEl.dataset.locked) {
+      priceEl.value = basePrice + sharePerItem;
+    }
+    groupSum += Number(priceEl.value);
+  });
+
+  // 2. 計算加購品項 (固定金額，不變動)
+  addonRows.forEach(r => {
+    const amount = Number(r.children[2].value) || 0;
+    r.querySelector(".price-input").value = amount; // 設定湊團價 = 金額
+    addonTotal += amount;
+  });
+  
+  // 3. 計算總計
+  
+  // 主購實際結帳金額：優惠組合金額 - 折扣碼
+  const checkoutVal = (Number(bundlePrice.value) || 0) - (Number(coupon.value) || 0);
+  
+  // 湊團總價：所有湊團金額 (品項 + 加購品) + 勾選平均折入的贈品金額 (抵銷/加回)
+  const sharedGiftAmount = Math.abs(giftSharedTotal);
+  const displayGroupTotal = groupSum + sharedGiftAmount + addonTotal;
+  
+  checkout.innerText = checkoutVal;
+  groupTotal.innerText = displayGroupTotal ;
+  checkMark.innerText = checkoutVal === displayGroupTotal ? "✅" : "❌";
+  
+  // 複製清單用的總價 (不含贈品，應等於 checkoutVal)
+  groupSumWithoutGifts = groupSum - giftSharedTotal + addonTotal;
+
+  renumber();
 }
 
 addItem();
 
 function copyText() {
- 
-  calculate(); // ⭐⭐⭐ 這一行一定要有
-  console.log("groupSumWithoutGifts =", groupSumWithoutGifts);
-  let text = `📦 湊團認購清單
+ 
+  calculate(); // 確保所有數值是最新的
+  let text = `📦 湊團認購清單
 
 `;
 
-  text += `優惠組合金額💰${bundlePrice.value || 0}
+  text += `優惠組合金額💰${bundlePrice.value || 0}
 `;
-  text += `折扣碼💰${coupon.value || 0}
+  text += `折扣碼💰${coupon.value || 0}
 `;
-  text += `折數：${discountRate.innerText}
+  text += `折數：${discountRate.innerText}
 
 `;
 
-  let i = 1;
+  let i = 1;
 
-  document.querySelectorAll("#items .row").forEach(r => {
-    const name = r.children[1].value || "（未填寫）";
-    const price = r.querySelector(".price-input").value;
-    text += `${i++}. ${name} $${price} ➡️
+  // 複製團購品項
+  document.querySelectorAll("#items .row").forEach(r => {
+    const name = r.children[1].value || "（未填寫）";
+    const price = r.querySelector(".price-input").value;
+    text += `${i++}. ${name} $${price} ➡️
 `;
-  });
+  });
 
-  document.querySelectorAll("#gifts .row").forEach(r => {
-    const name = r.children[1].value || "（未填寫）";
-    const amount = r.children[2].value || 0;
-    const shared = r.children[3].checked;
-    text += `${i++}. 贈品：${name} $${amount}${shared ? "（平均折入）" : ""} ➡️
+  // 📌 複製加購品項
+  document.querySelectorAll("#addons .row").forEach(r => {
+    const name = r.children[1].value || "（未填寫）";
+    const price = r.children[2].value; // 直接取金額欄位
+    text += `${i++}. 加購：${name} $${price} ➡️
 `;
-  });
+  });
 
-  text += `
+  // 複製贈品
+  document.querySelectorAll("#gifts .row").forEach(r => {
+    const name = r.children[1].value || "（未填寫）";
+    const amount = r.children[2].value || 0;
+    const shared = r.children[3].checked;
+    text += `${i++}. 贈品：${name} $${amount}${shared ? "（平均折入）" : ""} ➡️
+`;
+  });
+
+  text += `
 主購實際結帳金額💰${checkout.innerText}
 `;
-  text += `湊團總價💰${groupSumWithoutGifts}${Number(checkout.innerText) === groupSumWithoutGifts ? "✅" : ""}
+  // 顯示湊團總價 (不包含「平均折入」的贈品金額)
+  text += `湊團總價💰${groupSumWithoutGifts}${Number(checkout.innerText) === groupSumWithoutGifts ? "✅" : ""}
 `;
-  text += `⭐️請在箭頭➡️後方打上名字認購`;
+  text += `⭐️請在箭頭➡️後方打上名字認購`;
 
-  navigator.clipboard.writeText(text);
-  alert("已複製，可直接貼到社群！");
+  navigator.clipboard.writeText(text);
+  alert("已複製，可直接貼到社群！");
 }
 
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
