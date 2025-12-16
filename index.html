@@ -150,6 +150,16 @@ button.delete {
     padding: 6px;
   }
 }
+  /* ===== 手機版 加購品欄位修正 ===== */
+@media (max-width: 480px) {
+  #additionalItems .header,
+  #additionalItems .row {
+    /* #, 名稱, 金額, 刪除按鈕 */
+    grid-template-columns: 26px 1fr 70px auto; 
+    gap: 6px;
+    align-items: center;
+  }
+}
 </style>
 </head>
 
@@ -234,6 +244,8 @@ function getRate() {
 function renumber() {
   let i = 1;
   document.querySelectorAll("#items .row").forEach(r => r.querySelector(".no").innerText = i++);
+  // 新增：重新編號加購品
+  document.querySelectorAll("#additionalItems .row").forEach(r => r.querySelector(".no").innerText = i++);
   document.querySelectorAll("#gifts .row").forEach(r => r.querySelector(".no").innerText = i++);
 }
 
@@ -266,12 +278,28 @@ function addGift() {
   gifts.appendChild(r);
   renumber();
 }
-
+// 新增加購品項目
+function addAdditionalItem() {
+  const r = document.createElement("div");
+  r.className = "row";
+  r.innerHTML = `
+    <div class="no"></div>
+    <input placeholder="加購品名稱" />
+    <input type="number" class="price-input" placeholder="金額" value="0" min="0" oninput="calculate()" />
+    <button class="delete" onclick="this.parentElement.remove(); calculate()">✖</button>
+  `;
+  // 注意：這邊的加購品只有三個欄位，所以 CSS 會需要微調
+  document.getElementById("additionalItems").appendChild(r);
+  renumber();
+  calculate();
+}
 function calculate(forceRecalc = false) {
   const rate = getRate();
   discountRate.innerText = rate.toFixed(4);
 
   const itemRows = document.querySelectorAll("#items .row");
+  // 新增：取得加購品項目
+  const additionalItemRows = document.querySelectorAll("#additionalItems .row");
   const giftRows = document.querySelectorAll("#gifts .row");
 
   let giftSharedTotal = 0;
@@ -297,14 +325,21 @@ function calculate(forceRecalc = false) {
     }
     groupSum += Number(priceEl.value);
   });
+
+  // 新增：計算加購品總額
+  let additionalItemTotal = 0;
+  additionalItemRows.forEach(r => {
+    additionalItemTotal += Number(r.children[2].value) || 0;
+  });
+
   groupSumWithoutGifts = groupSum - giftSharedTotal;
   const checkoutVal = Number(bundlePrice.value) - Number(coupon.value);
-  // ⭐ 關鍵修改：只加「勾選平均折入」的贈品
   const sharedGiftAmount = Math.abs(giftSharedTotal);
-  const displayGroupTotal = groupSum + sharedGiftAmount;
+  // 修改：最終總價要加上加購品總額
+  const displayGroupTotal = groupSum + sharedGiftAmount + additionalItemTotal;
   checkout.innerText = checkoutVal;
   groupTotal.innerText = displayGroupTotal ;
-  checkMark.innerText = checkoutVal === displayGroupTotal ? "✅" : "❌";
+  checkMark.innerText = checkoutVal === groupSumWithoutGifts ? "✅" : "❌";
   
   renumber();
 }
@@ -312,7 +347,7 @@ function calculate(forceRecalc = false) {
 addItem();
 
 function copyText() {
- 
+  
   calculate(); // ⭐⭐⭐ 這一行一定要有
   console.log("groupSumWithoutGifts =", groupSumWithoutGifts);
   let text = `📦 湊團認購清單
@@ -336,6 +371,15 @@ function copyText() {
 `;
   });
 
+  // 新增：複製加購品項目
+  document.querySelectorAll("#additionalItems .row").forEach(r => {
+    const name = r.children[1].value || "（未填寫）";
+    const amount = r.children[2].value || 0;
+    text += `${i++}. 加購品：${name} $${amount} ➡️
+`;
+  });
+
+
   document.querySelectorAll("#gifts .row").forEach(r => {
     const name = r.children[1].value || "（未填寫）";
     const amount = r.children[2].value || 0;
@@ -347,7 +391,10 @@ function copyText() {
   text += `
 主購實際結帳金額💰${checkout.innerText}
 `;
-  text += `湊團總價💰${groupSumWithoutGifts}${Number(checkout.innerText) === groupSumWithoutGifts ? "✅" : ""}
+  // 原本的 groupSumWithoutGifts 檢查邏輯不動，維持只檢查主購結帳金額與**團購品項**的折價總和是否吻合
+  text += `湊團總價💰${groupTotal.innerText} (含加購品與贈品折入)
+`;
+  text += `團購品項折價總額💰${groupSumWithoutGifts}${Number(checkout.innerText) === groupSumWithoutGifts ? "✅" : ""}
 `;
   text += `⭐️請在箭頭➡️後方打上名字認購`;
 
@@ -359,5 +406,6 @@ function copyText() {
 
 </body>
 </html>
+
 
 
