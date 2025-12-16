@@ -165,31 +165,31 @@ button.delete {
 
 <body>
 
-<h2>📦 Yuna 團購湊團計算器Ver1.2<br>💩 By 璐璐璐</h2>
+<h2>📦 Yuna 團購湊團計算器Ver1.3<br>💩 By 璐璐璐</h2>
 
 <!-- 折數 -->
 <div class="section">
   <b>優惠折數</b>
   <div class="grid3">
     <div>
-      <div class="label">優惠組合金額</div>
+      <div class="label">優惠組合金額(A)</div>
       <input type="number" id="bundlePrice" oninput="calculate()" />
     </div>
     <div>
-      <div class="label">折扣碼金額</div>
+      <div class="label">折扣碼金額(B)</div>
       <input type="number" id="coupon" oninput="calculate()" />
     </div>
     <div>
-      <div class="label">總原價金額</div>
+      <div class="label">總原價金額(C)</div>
       <input type="number" id="bundleOriginal" oninput="calculate()" />
     </div>
   </div>
-  <div>折數：<b id="discountRate">0</b></div>
+  <div>折數：(A-B)/C =<b id="discountRate">0</b></div>
 </div>
 
 <!-- 團購品項 -->
 <div class="section">
-  <b>團購品項</b>
+  <b>團購品項(參與折數計算)</b>
   <div class="header">
     <div class="no">#</div>
     <div style="flex:1">品項名稱</div>
@@ -202,7 +202,7 @@ button.delete {
   
 <!-- 加購品品項 -->
 <div class="section">
-  <b>加購品 (不計入優惠折數)</b>
+  <b>加購品 (不計入優惠折數，原價計入主購結帳金額)</b>
   <div class="header">
     <div class="no">#</div>
     <div style="flex:1">品項名稱</div>
@@ -413,6 +413,7 @@ function copyText() {
 
 </body>
 </html>
+
 
 
 
