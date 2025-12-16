@@ -165,7 +165,7 @@ button.delete {
 
 <body>
 
-<h2>📦 Yuna 團購湊團計算器Ver1.1<br>💩 By 璐璐璐</h2>
+<h2>📦 Yuna 團購湊團計算器Ver1.2<br>💩 By 璐璐璐</h2>
 
 <!-- 折數 -->
 <div class="section">
@@ -326,20 +326,25 @@ function calculate(forceRecalc = false) {
     groupSum += Number(priceEl.value);
   });
 
-  // 新增：計算加購品總額
+ // 新增：計算加購品總額
   let additionalItemTotal = 0;
   additionalItemRows.forEach(r => {
     additionalItemTotal += Number(r.children[2].value) || 0;
   });
 
   groupSumWithoutGifts = groupSum - giftSharedTotal;
-  const checkoutVal = Number(bundlePrice.value) - Number(coupon.value);
+
+  // ⭐ 關鍵修改：主購結帳金額 = (組合價 - 折扣碼) + 加購品總額
+  const checkoutVal = (Number(bundlePrice.value) - Number(coupon.value)) + additionalItemTotal; 
+  
+  // ⭐ 關鍵修改：湊團總價現在應該要跟 checkoutVal 比較
   const sharedGiftAmount = Math.abs(giftSharedTotal);
-  // 修改：最終總價要加上加購品總額
   const displayGroupTotal = groupSum + sharedGiftAmount + additionalItemTotal;
+
   checkout.innerText = checkoutVal;
   groupTotal.innerText = displayGroupTotal ;
-  checkMark.innerText = checkoutVal === groupSumWithoutGifts ? "✅" : "❌";
+  // ⭐ 關鍵修改：檢查標記應比較 checkoutVal 與 displayGroupTotal
+  checkMark.innerText = checkoutVal === displayGroupTotal ? "✅" : "❌";
   
   renumber();
 }
@@ -388,13 +393,16 @@ function copyText() {
 `;
   });
 
-  text += `
+ text += `
 主購實際結帳金額💰${checkout.innerText}
 `;
-  // 原本的 groupSumWithoutGifts 檢查邏輯不動，維持只檢查主購結帳金額與**團購品項**的折價總和是否吻合
   text += `湊團總價💰${groupTotal.innerText} (含加購品與贈品折入)
 `;
-  text += `團購品項折價總額💰${groupSumWithoutGifts}${Number(checkout.innerText) === groupSumWithoutGifts ? "✅" : ""}
+  // ⭐ 關鍵修改：為了核對，這裡應該顯示 (主購實際結帳金額 - 加購品總額)
+  const bundleCheckoutOnly = Number(checkout.innerText) - Number(document.querySelectorAll("#additionalItems .row").reduce((sum, r) => sum + (Number(r.children[2].value) || 0), 0));
+  
+  // 將原本的檢查邏輯改為：檢查 (主購實際結帳金額 - 加購品總額) 是否等於 groupSumWithoutGifts
+  text += `團購品項折價總額💰${groupSumWithoutGifts}${bundleCheckoutOnly === groupSumWithoutGifts ? "✅" : "❌"}
 `;
   text += `⭐️請在箭頭➡️後方打上名字認購`;
 
@@ -406,6 +414,7 @@ function copyText() {
 
 </body>
 </html>
+
 
 
 
