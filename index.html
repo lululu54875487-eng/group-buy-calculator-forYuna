@@ -115,7 +115,13 @@ button.delete {
     font-size: 12px;
     color: #6e6e73;
   }
-
+   #additionalItems .header,
+  #additionalItems .row {
+    /* #, 名稱, 金額, 刪除按鈕 */
+    grid-template-columns: 26px 1fr 70px auto; 
+    gap: 6px;
+    align-items: center;
+  }
   #gifts .header div:nth-child(4) {
     grid-row: 2;
     grid-column: 2;
@@ -148,16 +154,6 @@ button.delete {
 
   button.delete {
     padding: 6px;
-  }
-}
-  /* ===== 手機版 加購品欄位修正 ===== */
-@media (max-width: 480px) {
-  #additionalItems .header,
-  #additionalItems .row {
-    /* #, 名稱, 金額, 刪除按鈕 */
-    grid-template-columns: 26px 1fr 70px auto; 
-    gap: 6px;
-    align-items: center;
   }
 }
 </style>
@@ -413,6 +409,7 @@ function copyText() {
 
 </body>
 </html>
+
 
 
 
