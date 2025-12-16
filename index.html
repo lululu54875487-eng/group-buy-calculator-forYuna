@@ -352,68 +352,98 @@ function calculate(forceRecalc = false) {
 addItem();
 
 function copyText() {
-  
+
+ 
+
   calculate(); // ⭐⭐⭐ 這一行一定要有
+
   console.log("groupSumWithoutGifts =", groupSumWithoutGifts);
+
   let text = `📦 湊團認購清單
 
+
+
 `;
+
+
 
   text += `優惠組合金額💰${bundlePrice.value || 0}
-`;
-  text += `折扣碼💰${coupon.value || 0}
-`;
-  text += `折數：${discountRate.innerText}
 
 `;
+
+  text += `折扣碼💰${coupon.value || 0}
+
+`;
+
+  text += `折數：${discountRate.innerText}
+
+
+
+`;
+
+
 
   let i = 1;
 
+
+
   document.querySelectorAll("#items .row").forEach(r => {
+
     const name = r.children[1].value || "（未填寫）";
+
     const price = r.querySelector(".price-input").value;
+
     text += `${i++}. ${name} $${price} ➡️
+
 `;
+
   });
 
-  // 新增：複製加購品項目
-  document.querySelectorAll("#additionalItems .row").forEach(r => {
-    const name = r.children[1].value || "（未填寫）";
-    const amount = r.children[2].value || 0;
-    text += `${i++}. 加購品：${name} $${amount} ➡️
-`;
-  });
 
 
   document.querySelectorAll("#gifts .row").forEach(r => {
+
     const name = r.children[1].value || "（未填寫）";
+
     const amount = r.children[2].value || 0;
+
     const shared = r.children[3].checked;
+
     text += `${i++}. 贈品：${name} $${amount}${shared ? "（平均折入）" : ""} ➡️
+
 `;
+
   });
 
- text += `
+
+
+  text += `
+
 主購實際結帳金額💰${checkout.innerText}
+
 `;
-  text += `湊團總價💰${groupTotal.innerText} (含加購品與贈品折入)
+
+  text += `湊團總價💰${groupSumWithoutGifts}${Number(checkout.innerText) === groupSumWithoutGifts ? "✅" : ""}
+
 `;
-  // ⭐ 關鍵修改：為了核對，這裡應該顯示 (主購實際結帳金額 - 加購品總額)
-  const bundleCheckoutOnly = Number(checkout.innerText) - Number(document.querySelectorAll("#additionalItems .row").reduce((sum, r) => sum + (Number(r.children[2].value) || 0), 0));
-  
-  // 將原本的檢查邏輯改為：檢查 (主購實際結帳金額 - 加購品總額) 是否等於 groupSumWithoutGifts
-  text += `團購品項折價總額💰${groupSumWithoutGifts}${bundleCheckoutOnly === groupSumWithoutGifts ? "✅" : "❌"}
-`;
+
   text += `⭐️請在箭頭➡️後方打上名字認購`;
 
+
+
   navigator.clipboard.writeText(text);
+
   alert("已複製，可直接貼到社群！");
+
 }
+
+
 
 </script>
 
 </body>
 </html>
+
 
 
 
