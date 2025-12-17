@@ -208,15 +208,17 @@ button.delete {
   <b>優惠折數</b>
   <div class="grid3">
     <div>
-      <div class="label">優惠組合金額(A)</div>
+      <div class="label">團購品項優惠總金額(A)</div>
       <input type="number" id="bundlePrice" oninput="calculate()" />
+      <div class="hint">通常是結帳頁面的小計</div>
     </div>
     <div>
       <div class="label">折扣碼金額(B)</div>
       <input type="number" id="coupon" oninput="calculate()" />
+      <div class="hint">折價卷或購物金都算>折價ㄐㄩ>
     </div>
     <div>
-      <div class="label">團購品項總原價金額(C)</div>
+      <div class="label">團購品項原價總金額(C)</div>
       <input type="number" id="bundleOriginal" readonly />
       <div class="hint">此欄位會自動計算，請先至下方輸入各品項原價</div>
     </div>
@@ -496,6 +498,7 @@ function copyText() {
 
 </body>
 </html>
+
 
 
 
