@@ -14,7 +14,12 @@ body {
 }
 
 h2 { text-align: center; margin: 6px 0 12px; }
-
+.hint {
+  font-size: 11px;
+  color: #8e8e93;
+  margin-top: 4px;
+  line-height: 1.4;
+}
 .section {
   background: #fff;
   padding: 14px;
@@ -213,6 +218,7 @@ button.delete {
     <div>
       <div class="label">團購品項總原價金額(C)</div>
       <input type="number" id="bundleOriginal" readonly />
+      <div class="hint">此欄位會自動計算，請先至下方輸入各品項原價</div>
     </div>
   </div>
   <div>折數：(A-B)/C =<b id="discountRate">0</b></div>
@@ -490,6 +496,7 @@ function copyText() {
 
 </body>
 </html>
+
 
 
 
