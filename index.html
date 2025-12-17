@@ -223,7 +223,7 @@ button.delete {
       <div class="hint">此欄位會自動計算，請先至下方輸入各品項原價</div>
     </div>
   </div>
-  <div>折數：(A-B)/C =<b id="discountRate">0</b></div>
+  
 </div>
 
 <!-- 團購品項 -->
@@ -234,8 +234,7 @@ button.delete {
   <div class="no">#</div>
   <div style="flex:1">品項名稱</div>
   <div style="flex:1">原價</div>
-  <div style="flex:1;text-align:right;">團購價</div>
-  <div style="flex:1;text-align:right;">COPY</div>
+  <div style="flex:1;text-align:aoto;">團購價</div>
 </div>
   <div id="items"></div>
   <button onclick="addItem()">➕ 新增品項</button>
@@ -268,6 +267,7 @@ button.delete {
 
 <!-- 總計 -->
 <div class="section">
+  <div>折數：(A-B)/C =<b id="discountRate">0</b></div>
   <div class="highlight">主購實際結帳金額：<span id="checkout">0</span></div>
   <div class="highlight">湊團總價：<span id="groupTotal">0</span> <span id="checkMark"></span></div>
   <br>
@@ -499,6 +499,7 @@ function copyText() {
 
 </body>
 </html>
+
 
 
 
