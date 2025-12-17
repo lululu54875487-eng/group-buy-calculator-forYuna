@@ -182,6 +182,11 @@ button.delete {
     transform: scale(1.0);
   }
 
+  input[readonly] {
+  background: #f1f1f3;
+  color: #555;
+}
+
   button.delete {
     padding: 6px;
   }
@@ -206,8 +211,8 @@ button.delete {
       <input type="number" id="coupon" oninput="calculate()" />
     </div>
     <div>
-      <div class="label">總原價金額(C)</div>
-      <input type="number" id="bundleOriginal" oninput="calculate()" />
+      <div class="label">團購品項總原價金額(C)</div>
+      <input type="number" id="bundleOriginal" readonly />
     </div>
   </div>
   <div>折數：(A-B)/C =<b id="discountRate">0</b></div>
@@ -358,6 +363,14 @@ function addAdditionalItem() {
   calculate();
 }
 function calculate(forceRecalc = false) {
+
+  // ⭐ 自動算 C
+  let originalSum = 0;
+  document.querySelectorAll("#items .row").forEach(r => {
+    originalSum += Number(r.children[2].value) || 0;
+  });
+  bundleOriginal.value = originalSum;
+  
   const rate = getRate();
   discountRate.innerText = rate.toFixed(4);
 
@@ -477,6 +490,7 @@ function copyText() {
 
 </body>
 </html>
+
 
 
 
