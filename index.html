@@ -46,6 +46,21 @@ input {
   background: #fafafa;
   box-sizing: border-box;
 }
+/* ===== 桌機版欄位對齊 ===== */
+.header .col {
+  flex: 1;
+}
+
+.header .price-col {
+  width: 90px;          /* 跟 .price-input 一樣 */
+  text-align: center;
+}
+
+.header .price-col .label {
+  margin-bottom: 0;
+  font-size: 12px;
+  color: #6e6e73;
+}
 
 .header, .row {
   display: flex;
@@ -53,6 +68,10 @@ input {
   align-items: center;
   margin-bottom: 8px;
   font-size: 14px;
+}
+.price-input.manual {
+  background: #fff3cd;   /* 淡黃 */
+  border-color: #f5c06f;
 }
 
 .header div { font-weight: 600; }
@@ -161,7 +180,7 @@ button.delete {
 
 <body>
 
-<h2>📦 Yuna 團購湊團計算器Ver1.3<br>💩 By 璐璐璐</h2>
+<h2>📦 Yuna 團購湊團計算器Ver1.4<br>💩 By 璐璐璐</h2>
 
 <!-- 折數 -->
 <div class="section">
@@ -186,12 +205,15 @@ button.delete {
 <!-- 團購品項 -->
 <div class="section">
   <b>團購品項(參與折數計算)</b>
+  <button onclick="recalcAll()">🔁 團購價更新</button>
   <div class="header">
-    <div class="no">#</div>
-    <div style="flex:1">品項名稱</div>
-    <div style="flex:1">原價</div>
-    <div style="flex:l">團購價</div>
+  <div class="no">#</div>
+  <div class="col">品項名稱</div>
+  <div class="col">原價</div>
+  <div class="price-col">
+    <div class="label">團購價</div>
   </div>
+</div>
   <div id="items"></div>
   <button onclick="addItem()">➕ 新增品項</button>
 </div>
@@ -200,10 +222,12 @@ button.delete {
 <div class="section">
   <b>加購品 (不計入優惠折數，原價計入主購結帳金額)</b>
   <div class="header">
-    <div class="no">#</div>
-    <div style="flex:1">品項名稱</div>
-    <div style="flex:1">金額</div>
+  <div class="no">#</div>
+  <div class="col">品項名稱</div>
+  <div class="price-col">
+    <div class="label">金額</div>
   </div>
+</div>
   <div id="additionalItems"></div>
   <button onclick="addAdditionalItem()">➕ 新增加購品</button>
 </div>
@@ -253,12 +277,23 @@ function addItem() {
     <input placeholder="品項名稱" />
     <input type="number" placeholder="原價" oninput="calculate()" />
     <input type="number" class="price-input" value="0" min="0"
-      oninput="this.dataset.locked='1'" />
+  oninput="
+    this.dataset.locked='1';
+    this.classList.add('manual');
+    calculate();
+  " />
     <button class="delete" onclick="this.parentElement.remove(); calculate()">✖</button>
   `;
   items.appendChild(r);
   renumber();
   calculate();
+}
+function recalcAll() {
+  document.querySelectorAll("#items .price-input").forEach(input => {
+    delete input.dataset.locked;   // 解除手動鎖定
+    input.classList.remove("manual");
+  });
+  calculate(true); // forceRecalc = true
 }
 
 function addGift() {
@@ -409,6 +444,7 @@ function copyText() {
 
 </body>
 </html>
+
 
 
 
