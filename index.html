@@ -82,7 +82,13 @@ input {
   text-align: center;
   font-weight: 600;
 }
-
+button.copy {
+  background: #e5e5ea;
+  color: #333;
+  padding: 6px 8px;
+  border-radius: 8px;
+  font-size: 14px;
+}
 button {
   padding: 8px 10px;
   font-size: 14px;
@@ -210,7 +216,7 @@ button.delete {
   <div class="no">#</div>
   <div style="flex:1">品項名稱</div>
   <div style="flex:1">原價</div>
-  <div style="flex:1;text-align:left;">團購價</div>
+  <div style="flex:1;text-align:right;">團購價</div>
 </div>
   <div id="items"></div>
   <button onclick="addItem()">➕ 新增品項</button>
@@ -222,7 +228,7 @@ button.delete {
 <div class="header">
   <div class="no">#</div>
   <div style="flex:1">品項名稱</div>
-  <div style="flex:1;text-align:left;">金額</div>
+  <div style="flex:1;text-align:right;">金額</div>
 </div>
   <div id="additionalItems"></div>
   <button onclick="addAdditionalItem()">➕ 新增加購品</button>
@@ -235,7 +241,7 @@ button.delete {
     <div class="no">#</div>
     <div style="flex:1">贈品名稱</div>
     <div style="flex:1">金額</div>
-    <div style="flex:1;text-align:left;">平均折入</div>
+    <div style="flex:1;text-align:right;">平均折入</div>
   </div>
   <div id="gifts"></div>
   <button onclick="addGift()">➕ 新增贈品</button>
@@ -264,7 +270,32 @@ function renumber() {
   document.querySelectorAll("#additionalItems .row").forEach(r => r.querySelector(".no").innerText = i++);
   document.querySelectorAll("#gifts .row").forEach(r => r.querySelector(".no").innerText = i++);
 }
+function copyRow(btn) {
+  const src = btn.parentElement;
 
+  const name = src.children[1].value;
+  const original = src.children[2].value;
+  const price = src.querySelector(".price-input").value;
+
+  const r = document.createElement("div");
+  r.className = "row";
+  r.innerHTML = `
+    <div class="no"></div>
+    <input value="${name}" />
+    <input type="number" value="${original}" oninput="calculate()" />
+    <input type="number" class="price-input manual" value="${price}"
+      data-locked="1"
+      oninput="this.dataset.locked='1'; this.classList.add('manual'); calculate()" />
+    <button class="copy" onclick="copyRow(this)">📋</button>
+    <button class="delete" onclick="this.parentElement.remove(); calculate()">✖</button>
+  `;
+
+  // 👇 插在最下方
+  items.appendChild(r);
+
+  renumber();
+  calculate();
+}
 function addItem() {
   const r = document.createElement("div");
   r.className = "row";
@@ -441,6 +472,7 @@ function copyText() {
 
 </body>
 </html>
+
 
 
 
