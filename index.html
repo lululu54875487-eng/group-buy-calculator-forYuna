@@ -278,6 +278,7 @@ function addItem() {
     this.classList.add('manual');
     calculate();
   " />
+    <button class="copy" onclick="copyRow(this)">📋</button>
     <button class="delete" onclick="this.parentElement.remove(); calculate()">✖</button>
   `;
   items.appendChild(r);
@@ -440,6 +441,7 @@ function copyText() {
 
 </body>
 </html>
+
 
 
 
