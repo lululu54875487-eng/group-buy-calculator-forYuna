@@ -205,14 +205,12 @@ button.delete {
 <!-- 團購品項 -->
 <div class="section">
   <b>團購品項(參與折數計算)</b>
-  <button onclick="recalcAll()">🔁 團購價更新</button>
-  <div class="header">
+  <button onclick="recalcAll()">🔁 團購價復原</button>
+<div class="header">
   <div class="no">#</div>
-  <div class="col">品項名稱</div>
-  <div class="col">原價</div>
-  <div class="price-col">
-    <div class="label">團購價</div>
-  </div>
+  <div style="flex:1">品項名稱</div>
+  <div style="flex:1">原價</div>
+  <div style="flex:1;text-align:left;">團購價</div>
 </div>
   <div id="items"></div>
   <button onclick="addItem()">➕ 新增品項</button>
@@ -221,12 +219,10 @@ button.delete {
 <!-- 加購品品項 -->
 <div class="section">
   <b>加購品 (不計入優惠折數，原價計入主購結帳金額)</b>
-  <div class="header">
+<div class="header">
   <div class="no">#</div>
-  <div class="col">品項名稱</div>
-  <div class="price-col">
-    <div class="label">金額</div>
-  </div>
+  <div style="flex:1">品項名稱</div>
+  <div style="flex:1;text-align:left;">金額</div>
 </div>
   <div id="additionalItems"></div>
   <button onclick="addAdditionalItem()">➕ 新增加購品</button>
@@ -239,7 +235,7 @@ button.delete {
     <div class="no">#</div>
     <div style="flex:1">贈品名稱</div>
     <div style="flex:1">金額</div>
-    <div>平均折入</div>
+    <div style="flex:1;text-align:left;>平均折入</div>
   </div>
   <div id="gifts"></div>
   <button onclick="addGift()">➕ 新增贈品</button>
@@ -444,6 +440,7 @@ function copyText() {
 
 </body>
 </html>
+
 
 
 
