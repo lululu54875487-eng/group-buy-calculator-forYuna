@@ -279,7 +279,7 @@ button.delete {
   <div class="highlight">湊團總價：<span id="groupTotal">0</span> <span id="checkMark"></span></div>
   <br>
   
-  roundingHint.style.display = checkMark.innerText === "❌" ? "block" : "none";
+  
  <div id="roundingHint" class="hint warning-box" style="display:none;">
   <strong>⚠ 注意：</strong><br>
   如果顯示「❌」，表示某些品項原價計算折數因四捨五入造成誤差，<br>
@@ -290,6 +290,7 @@ button.delete {
 </div>
 
 <script>
+  roundingHint.style.display = checkMark.innerText === "❌" ? "block" : "none";
 let groupSumWithoutGifts = 0;
 function getRate() {
   return bundleOriginal.value > 0
@@ -514,6 +515,7 @@ function copyText() {
 
 </body>
 </html>
+
 
 
 
