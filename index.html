@@ -21,8 +21,10 @@ h2 { text-align: center; margin: 6px 0 12px; }
   line-height: 1.4;
 }
 .hint-blue {
-  color: #1a73e8;        /* 乾淨、系統感藍色 */
-  font-weight: 500;
+  color: #0a84ff;
+  background: rgba(10,132,255,0.1);
+  padding: 2px 6px;
+  border-radius: 6px;
 }
 .section {
   background: #fff;
@@ -240,7 +242,10 @@ button.delete {
 <!-- 團購品項 -->
 <div class="section">
   <b>團購品項(參與折數計算)</b>
-  <button onclick="recalcAll()">🔁 團購價復原</button>
+  <div class="hint hint-blue">
+  🌟 輸入完各品項請按一下「🔁團購價計算」按鈕 
+  </div>
+  <button onclick="recalcAll()">🔁 團購價計算</button>
 <div class="header">
   <div class="no">#</div>
   <div style="flex:1">品項名稱</div>
@@ -519,6 +524,7 @@ function copyText() {
 
 </body>
 </html>
+
 
 
 
