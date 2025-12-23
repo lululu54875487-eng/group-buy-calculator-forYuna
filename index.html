@@ -290,7 +290,7 @@ button.delete {
 </div>
 
 <script>
-roundingHint.style.display = checkMark.innerText === "❌" ? "block" : "none";
+
 let groupSumWithoutGifts = 0;
 function getRate() {
   return bundleOriginal.value > 0
@@ -447,7 +447,7 @@ function calculate(forceRecalc = false) {
   groupTotal.innerText = displayGroupTotal ;
   // ⭐ 關鍵修改：檢查標記應比較 checkoutVal 與 displayGroupTotal
   checkMark.innerText = checkoutVal === displayGroupTotal ? "✅" : "❌";
-  
+  roundingHint.style.display = checkMark.innerText === "❌" ? "block" : "none";
   renumber();
 }
 
@@ -515,6 +515,7 @@ function copyText() {
 
 </body>
 </html>
+
 
 
 
