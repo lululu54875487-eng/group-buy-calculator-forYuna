@@ -278,12 +278,12 @@ button.delete {
   <div class="highlight">主購實際結帳金額：<span id="checkout">0</span></div>
   <div class="highlight">湊團總價：<span id="groupTotal">0</span> <span id="checkMark"></span></div>
   <br>
-  <div class="hint warning-box">
+ <div class="hint warning-box">
   <strong>⚠ 注意：</strong><br>
-  如果顯示「X」，表示某些品項原價計算折數因四捨五入造成誤差，<br>
-  請手動調整某些品項團購價<br>
+  如果顯示「❌」，表示某些品項原價計算折數因四捨五入造成誤差，<br>
+  請手動調整某些品項團購價，讓圖示顯示「✅」就可以複製了<br>
 （有手動調整的團購價欄位會顯示黃底）
-</div>
+</div><br>
   <button onclick="copyText()">📋 一鍵複製認購清單</button>
 </div>
 
@@ -512,6 +512,7 @@ function copyText() {
 
 </body>
 </html>
+
 
 
 
