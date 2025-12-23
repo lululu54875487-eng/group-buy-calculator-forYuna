@@ -80,7 +80,14 @@ input {
 }
 
 .header div { font-weight: 600; }
-
+.warning-box {
+  color: #b30000;
+  background-color: #fff3f3;
+  border: 1px solid #ffb3b3;
+  padding: 8px 12px;
+  border-radius: 4px;
+  line-height: 1.6;
+}
 .no { width: 26px; text-align: center; }
 .price-input {
   width: 90px;
@@ -271,6 +278,12 @@ button.delete {
   <div class="highlight">主購實際結帳金額：<span id="checkout">0</span></div>
   <div class="highlight">湊團總價：<span id="groupTotal">0</span> <span id="checkMark"></span></div>
   <br>
+  <div class="hint warning-box">
+  <strong>⚠ 注意：</strong><br>
+  如果顯示「X」，表示某些品項原價計算折數因四捨五入造成誤差，<br>
+  請手動調整某些品項團購價<br>
+（有手動調整的團購價欄位會顯示黃底）
+</div>
   <button onclick="copyText()">📋 一鍵複製認購清單</button>
 </div>
 
@@ -499,6 +512,7 @@ function copyText() {
 
 </body>
 </html>
+
 
 
 
