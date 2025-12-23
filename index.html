@@ -367,7 +367,7 @@ function addItem() {
     calculate();
   " />
     <button class="copy" onclick="copyRow(this)">📋</button>
-    <button class="delete-btn" onclick="this.parentElement.remove(); calculate()">✖</button>
+    <button class="delete" onclick="this.parentElement.remove(); calculate()">✖</button>
   `;
   items.appendChild(r);
   renumber();
@@ -537,6 +537,7 @@ function copyText() {
 
 </body>
 </html>
+
 
 
 
