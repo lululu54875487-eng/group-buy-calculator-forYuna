@@ -33,7 +33,14 @@ h2 { text-align: center; margin: 6px 0 12px; }
   border-radius: 14px;
   margin-bottom: 14px;
 }
-
+.watermark {
+  position: fixed;
+  bottom: 8px;
+  right: 8px;
+  font-size: 11px;
+  color: rgba(0,0,0,0.2);
+  pointer-events: none; /* 不影響點擊 */
+}
 .grid3 {
   display: grid;
   gap: 12px;
@@ -226,7 +233,9 @@ button.delete {
 </head>
 
 <body>
-
+<div class="watermark">
+  限 Yuna 團購使用｜禁止外流
+</div>
 <h2>📦 Yuna 團購湊團計算器Ver1.1<br>💩 By 璐璐璐</h2>
 
 <!-- 折數 -->
