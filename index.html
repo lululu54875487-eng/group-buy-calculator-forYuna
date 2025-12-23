@@ -130,11 +130,6 @@ button:active {
   opacity: 0.9;
 }
 button.delete {
-  position: absolute;
-  right: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  /*原本*/
   background: #e5e5ea;
   color: #333;
 }
@@ -372,7 +367,7 @@ function addItem() {
     calculate();
   " />
     <button class="copy" onclick="copyRow(this)">📋</button>
-    <button class="delete" onclick="this.parentElement.remove(); calculate()">✖</button>
+    <button class="delete-btn" onclick="this.parentElement.remove(); calculate()">✖</button>
   `;
   items.appendChild(r);
   renumber();
@@ -542,6 +537,7 @@ function copyText() {
 
 </body>
 </html>
+
 
 
 
