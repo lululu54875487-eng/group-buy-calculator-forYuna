@@ -67,7 +67,16 @@ input {
   width: 90px;          /* 跟 .price-input 一樣 */
   text-align: center;
 }
+.item-row {
+  position: relative;
+}
 
+.delete-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+}
 .header .price-col .label {
   margin-bottom: 0;
   font-size: 12px;
@@ -121,6 +130,11 @@ button:active {
   opacity: 0.9;
 }
 button.delete {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  /*原本*/
   background: #e5e5ea;
   color: #333;
 }
@@ -334,7 +348,7 @@ function copyRow(btn) {
     <input type="number" class="price-input manual" value="${price}"
       data-locked="1"
       oninput="this.dataset.locked='1'; this.classList.add('manual'); calculate()" />
-    <button class="copy" onclick="copyRow(this)">📋</button>
+    <button class="copy" onclick="copyRow(this); calculate()">📋</button>
     <button class="delete" onclick="this.parentElement.remove(); calculate()">✖</button>
   `;
 
@@ -528,6 +542,7 @@ function copyText() {
 
 </body>
 </html>
+
 
 
 
