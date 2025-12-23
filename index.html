@@ -20,6 +20,10 @@ h2 { text-align: center; margin: 6px 0 12px; }
   margin-top: 4px;
   line-height: 1.4;
 }
+.hint-blue {
+  color: #1a73e8;        /* 乾淨、系統感藍色 */
+  font-weight: 500;
+}
 .section {
   background: #fff;
   padding: 14px;
@@ -217,17 +221,17 @@ button.delete {
     <div>
       <div class="label">團購品項優惠總金額(A)</div>
       <input type="number" id="bundlePrice" oninput="calculate()" />
-      <div class="hint">通常是結帳頁面的小計</div>
+      <div class="hint">想買的通通加進購物車後的金額</div>
     </div>
     <div>
       <div class="label">折扣碼金額(B)</div>
       <input type="number" id="coupon" oninput="calculate()" />
-      <div class="hint">折價卷或購物金都算</div>
+      <div class="hint">折價卷或購物金都key這裡</div>
     </div>
     <div>
       <div class="label">團購品項原價總金額(C)</div>
       <input type="number" id="bundleOriginal" readonly />
-      <div class="hint">此欄位會自動計算，請先至下方輸入各品項原價</div>
+      <div class="hint hint-blue">此欄位會自動計算，請先至下方輸入各品項原價</div>
     </div>
   </div>
   
@@ -515,6 +519,7 @@ function copyText() {
 
 </body>
 </html>
+
 
 
 
