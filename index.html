@@ -302,6 +302,33 @@ button.delete {
   <div id="gifts"></div>
   <button onclick="addGift()">➕ 新增贈品</button>
 </div>
+<!-- 寄送資訊 -->
+<div class="section">
+  <b>📦 寄送資訊</b>
+
+  <div class="grid3">
+    <div>
+      <div class="label">寄送方式</div>
+      <input
+        type="text"
+        id="shippingMethod"
+        placeholder="例如：賣貨便 / iopen mall / 面交 "
+      />
+    </div>
+
+    <div>
+      <div class="label">運費</div>
+      <input
+        type="number"
+        id="shippingFee"
+        placeholder="0"
+        min="0"
+        oninput="calculate()"
+      />
+      <div class="hint hint-blue">會自動加到主購實際結帳金額</div>
+    </div>
+  </div>
+</div>
 
 <!-- 總計 -->
 <div class="section">
@@ -527,7 +554,13 @@ function copyText() {
     text += `${i++}. 贈品：${name} $${amount}${shared ? "（平均折入）" : ""} ➡️
 `;
   });
-
+  //4.寄送方式
+if (shippingMethod.value || shippingFee.value) {
+  text += `
+寄送方式📦 ${shippingMethod.value || "未填寫"}
+運費💰 ${shippingFee.value || 0}
+`;
+}
   text += `
 主購實際結帳金額💰${checkout.innerText}
 `;
@@ -546,6 +579,7 @@ function copyText() {
 
 </body>
 </html>
+
 
 
 
