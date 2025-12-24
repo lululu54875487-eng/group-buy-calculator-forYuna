@@ -325,7 +325,7 @@ button.delete {
         min="0"
         oninput="calculate()"
       />
-      <div class="hint hint-blue">會自動加到主購實際結帳金額</div>
+      <div class="hint hint-blue">若尚未決定可以先不填寫</div>
     </div>
   </div>
 </div>
@@ -554,13 +554,23 @@ function copyText() {
     text += `${i++}. 贈品：${name} $${amount}${shared ? "（平均折入）" : ""} ➡️
 `;
   });
-  //4.寄送方式
-if (shippingMethod.value || shippingFee.value) {
+// 4. 寄送資訊
+const shippingMethodEl = document.getElementById("shippingMethod");
+const shippingFeeEl = document.getElementById("shippingFee");
+
+const shippingMethod = shippingMethodEl?.value?.trim() || "";
+const shippingFee = Number(shippingFeeEl?.value) || 0;
+
+if (shippingMethod || shippingFeeEl?.value !== "") {
+  const shippingText = shippingFee === 0 ? "免運 🚚" : `$${shippingFee}`;
+
   text += `
-寄送方式📦 ${shippingMethod.value || "未填寫"}
-運費💰 ${shippingFee.value || 0}
+寄送方式📦 ${shippingMethod || "未填寫"}
+運費💰 ${shippingText}
+
 `;
 }
+
   text += `
 主購實際結帳金額💰${checkout.innerText}
 `;
@@ -579,6 +589,7 @@ if (shippingMethod.value || shippingFee.value) {
 
 </body>
 </html>
+
 
 
 
