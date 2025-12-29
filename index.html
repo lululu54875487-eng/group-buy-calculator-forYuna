@@ -516,6 +516,7 @@ function addGift() {
     <div class="no"></div>
     <input placeholder="贈品名稱" />
     <input type="number" placeholder="金額" oninput="resetGiftShare(this)" />
+    <div class="label">平均折入</div>
     <input type="checkbox" onchange="calculate(true)" />
     <button class="delete" onclick="this.parentElement.remove(); calculate(true)">✖</button>
   `;
@@ -702,4 +703,5 @@ document.addEventListener("click", function () {
 
 </body>
 </html>
+
 
