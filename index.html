@@ -184,7 +184,21 @@ button.delete {
   background: #e5e5ea;
   color: #333;
 }
+.additional-header {
+  display: flex;
+  gap: 8px;
+  margin: 6px 0 4px;
+}
 
+.additional-header .hint:first-child {
+  flex: 1;          /* 名稱撐開 */
+  text-align: left;
+}
+
+.additional-header .hint:last-child {
+  width: 90px;      /* 跟加購價 input 寬度一致 */
+  text-align: center;
+}
 .highlight {
   font-size: 16px;
   font-weight: 600;
@@ -378,8 +392,10 @@ button.delete {
   <b>💝加購品 (不計入優惠折數，原價計入主購結帳金額)</b>
 <div class="header">
 </div>
-  <div class="hint hint-blue">加購品項名稱</div>
-  <div class="hint hint-blue">加購價</div>
+  <div class="additional-header">
+    <div class="hint hint-blue">加購品項名稱</div>
+    <div class="hint hint-blue">加購價</div>
+  </div>
   <div id="additionalItems"></div>
   <button onclick="addAdditionalItem()">➕ 新增加購品</button>
 </div>
@@ -717,6 +733,7 @@ document.addEventListener("click", function () {
 
 </body>
 </html>
+
 
 
 
