@@ -547,7 +547,7 @@ function addAdditionalItem() {
   r.innerHTML = `
     <div class="no"></div>
     <input placeholder="加購品名稱" />
-    <input type="number" class="price-input" placeholder="金額" value="0" min="0" oninput="calculate()" />
+    <input type="number" class="price-input" value="0" min="0" oninput="calculate()" />
     
     <button class="delete" onclick="this.parentElement.remove(); calculate()">✖</button>
   `;
@@ -721,6 +721,7 @@ document.addEventListener("click", function () {
 
 </body>
 </html>
+
 
 
 
