@@ -237,19 +237,24 @@ button.delete {
     color: #6e6e73;
   }
   .header,
-  .row {
-    display: grid;
-    grid-template-columns: 26px 1fr 70px 64px;
-    gap: 6px;
-    align-items: center;
-    position: relative;
-  }
-  .row button.delete {
+ /* ===== 修正手機版刪除鈕跑位 ===== */
+.row {
+  position: relative;
+}
+
+.row button.delete {
   position: absolute;
-  right: 6px;
+  right: -4px;
   top: 50%;
   transform: translateY(-50%);
-  }
+  grid-column: unset;   /* ❗一定要有 */
+  z-index: 2;
+}
+
+/* 避免團購價被蓋住 */
+.price-input {
+  padding-right: 22px;
+}
   /* 贈品欄位（沒有團購價，多一個 checkbox） */
   #gifts .header,
   #gifts .row {
