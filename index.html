@@ -194,12 +194,12 @@ button.delete {
    flex: 1;       /*   名稱撐開 */
   text-align: left;
 }
-
-.additional-header .hint:last-child {
-  flex: 1;  
-  /* width: 90px;      跟加購價 input 寬度一致 */ 
+.additional-header .hint:last-child { 
+  flex: 1;
+ /* width: 90px;       跟加購價 input 寬度一致 */ 
   text-align: center;
 }
+
 .highlight {
   font-size: 16px;
   font-weight: 600;
@@ -268,7 +268,10 @@ button.delete {
     gap: 6px;
     align-items: center;
   }
-  
+  .additional-header .hint:last-child { 
+  width: 90px;      /* 跟加購價 input 寬度一致 */ 
+  text-align: center;
+}
 .price-input::placeholder {
   color: #b0b0b5;   /* iOS 淺灰 */
   font-weight: 400;
@@ -738,6 +741,7 @@ document.addEventListener("click", function () {
 
 </body>
 </html>
+
 
 
 
