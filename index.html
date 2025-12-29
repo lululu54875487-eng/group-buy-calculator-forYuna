@@ -494,12 +494,17 @@ function addItem() {
     <div class="no"></div>
     <input placeholder="品項名稱" />
     <input type="number" placeholder="原價" oninput="calculate()" />
-  <input type="number" class="price-input" value="" min="0"
-  oninput="
-    this.dataset.locked='1';
-    this.classList.add('manual');
-    calculate();
-  " />
+  <input
+      type="number"
+      class="price-input"
+      placeholder="團購價"
+      min="0"
+      oninput="
+        this.dataset.locked='1';
+        this.classList.add('manual');
+        calculate();
+      "
+    />
     <button class="copy" onclick="copyRow(this)">📋</button>
     <button class="delete" onclick="this.parentElement.remove(); calculate()">✖</button>
   `;
@@ -710,4 +715,5 @@ document.addEventListener("click", function () {
 
 </body>
 </html>
+
 
