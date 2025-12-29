@@ -644,9 +644,12 @@ function calculate(forceRecalc = false) {
     //}
     //原本的end
     //新的
+    // 只有「沒被鎖定」或「強制重算」才自動寫值
     // ✅ 新增列常見就是 0，所以即使被鎖，也讓它自動算
-  if (forceRecalc || !isLocked || isZeroOrEmpty) {
+  //if (forceRecalc || !isLocked || isZeroOrEmpty) {
+    if (forceRecalc || !isLocked) {
     priceEl.value = basePrice + sharePerItem;
+    //priceEl.value = basePrice + sharePerItem;
     // 如果是因為 0/空值而被自動算出來，順便解除黃底（代表不是手動）
     if (isZeroOrEmpty) priceEl.classList.remove("manual");
   }
