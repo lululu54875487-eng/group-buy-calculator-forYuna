@@ -203,7 +203,14 @@ button.delete {
   font-size: 16px;
   font-weight: 600;
 }
-
+.price-input {
+    background: rgba(10,132,255,0.08); /* 淡藍 */
+    placeholder="金額";
+    width: 90px;
+    gap: 6px;
+    padding: 4px;
+    box-sizing: border-box;
+  }
   /* ===== 手機版欄位修正 ===== */
 @media (max-width: 480px) {
   /* 隱藏贈品 header 的「平均折入」 */
@@ -261,14 +268,7 @@ button.delete {
     gap: 6px;
     align-items: center;
   }
-  .price-input {
-    background: rgba(10,132,255,0.08); /* 淡藍 */
-    placeholder="金額";
-    width: 90px;
-    gap: 6px;
-    padding: 4px;
-    box-sizing: border-box;
-  }
+  
 .price-input::placeholder {
   color: #b0b0b5;   /* iOS 淺灰 */
   font-weight: 400;
@@ -734,6 +734,7 @@ document.addEventListener("click", function () {
 
 </body>
 </html>
+
 
 
 
