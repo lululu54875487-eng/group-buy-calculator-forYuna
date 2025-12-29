@@ -236,7 +236,7 @@ button.delete {
 </div>
 <body>
 
-<h2>✨Yuna 團購湊團計算器Ver1.1<br>💩 By 璐璐璐</h2>
+<h2>✨Yuna 團購湊團計算器Ver1.0<br>💩 By 璐璐璐</h2>
 
 <!-- 折數 -->
 <div class="section">
@@ -265,7 +265,7 @@ button.delete {
 <div class="section">
   <b>⭐️團購品項(參與折數計算)</b> 
   <button onclick="recalcAll()">💰 團購價計算</button>
-  <div class="hint hint-blue">
+  <div id="recalcHint" class="hint hint-blue" style="display:"block";">
   🌟 輸入完各品項請按一下「💰 團購價計算」按鈕 
   </div>
 <div class="header">
@@ -390,6 +390,8 @@ function copyRow(btn) {
 
   renumber();
   calculate();
+   // ⭐ 等於先按一次「團購價計算」
+  recalcAll();
 }
 function addItem() {
   const r = document.createElement("div");
@@ -410,6 +412,8 @@ function addItem() {
   items.appendChild(r);
   renumber();
   calculate();
+   // ⭐ 顯示提醒
+  document.getElementById("recalcHint").style.display = "block";
 }
 function recalcAll() {
   document.querySelectorAll("#items .price-input").forEach(input => {
@@ -601,6 +605,7 @@ if (shippingMethod || shippingFeeEl?.value !== "") {
 
 </body>
 </html>
+
 
 
 
