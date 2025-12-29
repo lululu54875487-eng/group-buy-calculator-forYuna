@@ -557,7 +557,9 @@ function calculate(forceRecalc = false) {
   // ⭐ 自動算 C
   let originalSum = 0;
   document.querySelectorAll("#items .row").forEach(r => {
-    originalSum += Number(r.children[2].value) || 0;
+   originalSum += Number(
+  r.querySelector(".item-original")?.value || 0
+);
   });
   bundleOriginal.value = originalSum;
   
@@ -717,6 +719,7 @@ document.addEventListener("click", function () {
 
 </body>
 </html>
+
 
 
 
