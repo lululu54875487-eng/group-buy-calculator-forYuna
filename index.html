@@ -33,6 +33,27 @@ h2 { text-align: center; margin: 6px 0 12px; }
   border-radius: 14px;
   margin-bottom: 14px;
 }
+  .summary {
+  color: #1f3c88;              /* 穩定耐看的深藍 */
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.summary b {
+  font-weight: 700;
+  color: #0a84ff;              /* iOS 亮藍 */
+}
+
+.summary .highlight {
+  font-size: 16px;
+  font-weight: 700;
+  color: #2f5bea;              /* 主金額藍 */
+}
+
+.summary .highlight span {
+  font-size: 18px;
+  color: #0a84ff;
+}
 .watermark {
   position: fixed;
   bottom: 8px;
@@ -236,7 +257,7 @@ button.delete {
 </div>
 <body>
 
-<h2>✨Yuna 團購湊團計算器Ver1.0<br>💩 By 璐璐璐</h2>
+<h2>✨Yuna 團購湊團計算器Ver1.1<br>💩 By 璐璐璐</h2>
 
 <!-- 折數 -->
 <div class="section">
@@ -331,13 +352,17 @@ button.delete {
 </div>
 
 <!-- 總計 -->
-<div class="section">
-  <div>折數：(A-B)/C =<b id="discountRate">0</b></div>
-  <div class="highlight">主購實際結帳金額：<span id="checkout">0</span></div>
-  <div class="highlight">湊團總價：<span id="groupTotal">0</span> <span id="checkMark"></span></div>
+<div class="summary">
+  <div>折數：(A-B)/C = <b id="discountRate">0</b></div>
+  <div class="highlight">
+    主購實際結帳金額：<span id="checkout">0</span>
+  </div>
+  <div class="highlight">
+    湊團總價：<span id="groupTotal">0</span>
+    <span id="checkMark"></span>
+  </div>
+</div>
   <br>
-  
-  
  <div id="roundingHint" class="hint warning-box" style="display:none;">
   <strong>⚠ 注意：</strong><br>
   如果顯示「❌」，表示某些品項原價計算折數因四捨五入造成誤差，<br>
@@ -611,6 +636,7 @@ if (shippingMethod || shippingFeeEl?.value !== "") {
 
 </body>
 </html>
+
 
 
 
