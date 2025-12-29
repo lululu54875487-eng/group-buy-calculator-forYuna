@@ -466,7 +466,7 @@ function copyRow(btn) {
   // ⭐ 等於先按一次「團購價計算」
   recalcAll();
   const src = btn.parentElement;
-
+   const row = btn.parentElement;
   const name = row.querySelector(".item-name").value;
   const original = row.querySelector(".item-original").value;
   const price = row.querySelector(".item-price").value;
@@ -717,6 +717,7 @@ document.addEventListener("click", function () {
 
 </body>
 </html>
+
 
 
 
