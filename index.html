@@ -396,7 +396,7 @@ function addItem() {
     <div class="no"></div>
     <input placeholder="品項名稱" />
     <input type="number" placeholder="原價" oninput="calculate()" />
-    <input type="number" class="price-input" value="0" min="0"
+  <input type="number" class="price-input" value="" min="0"
   oninput="
     this.dataset.locked='1';
     this.classList.add('manual');
@@ -479,13 +479,24 @@ function calculate(forceRecalc = false) {
     const original = Number(r.children[2].value);
     const basePrice = Math.round(original * rate);
     const priceEl = r.querySelector(".price-input");
-
-    if (forceRecalc || !priceEl.dataset.locked) {
-      priceEl.value = basePrice + sharePerItem;
-    }
+    //原本的沒有這兩行
+    const isLocked = priceEl.dataset.locked === "1";
+    const isZeroOrEmpty = (priceEl.value === "" || Number(priceEl.value) === 0);
+    //原本的
+    //if (forceRecalc || !priceEl.dataset.locked) {
+     // priceEl.value = basePrice + sharePerItem;
+    //}
+    //原本的end
+    //新的
+    // ✅ 新增列常見就是 0，所以即使被鎖，也讓它自動算
+  if (forceRecalc || !isLocked || isZeroOrEmpty) {
+    priceEl.value = basePrice + sharePerItem;
+    // 如果是因為 0/空值而被自動算出來，順便解除黃底（代表不是手動）
+    if (isZeroOrEmpty) priceEl.classList.remove("manual");
+  }
     groupSum += Number(priceEl.value);
   });
-
+//新的end
  // 新增：計算加購品總額
   let additionalItemTotal = 0;
   additionalItemRows.forEach(r => {
@@ -588,6 +599,7 @@ if (shippingMethod || shippingFeeEl?.value !== "") {
 
 </body>
 </html>
+
 
 
 
