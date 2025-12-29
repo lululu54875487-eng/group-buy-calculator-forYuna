@@ -114,7 +114,12 @@ input {
 .item-row {
   position: relative;
 }
-
+.price-header {
+  flex: 1;
+  text-align: right;
+  padding-right: 30px; /* 距離邊界 */
+  box-sizing: border-box;
+}
 .delete-btn {
   position: absolute;
   right: 8px;
@@ -359,7 +364,7 @@ button.delete {
   </div>
 <div class="header">
   <div class="no">#</div>
-  <div style="flex:1">團購價</div>
+  <div class="price-header" style="flex:1">團購價</div>
 </div>
   <div id="items"></div>
   <button onclick="addItem()">➕ 新增品項</button>
@@ -494,17 +499,12 @@ function addItem() {
     <div class="no"></div>
     <input placeholder="品項名稱" />
     <input type="number" placeholder="原價" oninput="calculate()" />
-  <input
-      type="number"
-      class="price-input"
-      placeholder="團購價"
-      min="0"
-      oninput="
-        this.dataset.locked='1';
-        this.classList.add('manual');
-        calculate();
-      "
-    />
+  <input type="number" class="price-input" value="" min="0"
+  oninput="
+    this.dataset.locked='1';
+    this.classList.add('manual');
+    calculate();
+  " />
     <button class="copy" onclick="copyRow(this)">📋</button>
     <button class="delete" onclick="this.parentElement.remove(); calculate()">✖</button>
   `;
