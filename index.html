@@ -355,7 +355,13 @@ function getRate() {
     ? (bundlePrice.value - coupon.value) / bundleOriginal.value
     : 0;
 }
-
+  //重置平均折入checkbox
+function resetGiftShare(amountInputEl) {
+  const row = amountInputEl.closest(".row");
+  const cb = row.querySelector('input[type="checkbox"]');
+  if (cb) cb.checked = false; // ⭐ 金額變了就取消平均折入
+  calculate(true);
+}
 function renumber() {
   let i = 1;
   document.querySelectorAll("#items .row").forEach(r => r.querySelector(".no").innerText = i++);
@@ -429,7 +435,7 @@ function addGift() {
   r.innerHTML = `
     <div class="no"></div>
     <input placeholder="贈品名稱" />
-    <input type="number" placeholder="金額" oninput="calculate()" />
+    <input type="number" placeholder="金額" oninput="resetGiftShare(this)" />
     <input type="checkbox" onchange="calculate(true)" />
     <button class="delete" onclick="this.parentElement.remove(); calculate(true)">✖</button>
   `;
@@ -605,6 +611,7 @@ if (shippingMethod || shippingFeeEl?.value !== "") {
 
 </body>
 </html>
+
 
 
 
