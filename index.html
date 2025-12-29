@@ -252,6 +252,44 @@ button.delete {
     padding: 6px;
   }
 }
+/* ===== 版本更新 Tooltip（桌機 hover + 手機點擊） ===== */
+.version-wrap {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 13px;
+  color: #0a84ff;
+}
+
+.version-tooltip {
+  display: none;
+  position: absolute;
+  top: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 260px;
+  background: #ffffff;
+  border: 1px solid #d1d1d6;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 12px;
+  color: #333;
+  line-height: 1.5;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  z-index: 999;
+}
+
+/* 🖥 桌機 hover */
+@media (hover: hover) and (pointer: fine) {
+  .version-wrap:hover .version-tooltip {
+    display: block;
+  }
+}
+
+/* 📱 手機點擊顯示 */
+.version-tooltip.show {
+  display: block;
+}
 </style>
 </head>
 <div class="watermark">
@@ -259,7 +297,21 @@ button.delete {
 </div>
 <body>
 
-<h2>✨Yuna 團購湊團計算器Ver1.1<br>💩 By 璐璐璐</h2>
+<h2>
+  ✨Yuna 團購湊團計算器 Ver1.1
+  <span class="version-wrap" onclick="toggleVersionLog(event)">
+    ｜版本更新📔
+    <div class="version-tooltip" id="versionLog">
+      <b>Ver 1.1 更新內容</b><br>
+      ・新增「加購品」不列入折數計算<br>
+      ・贈品可選擇是否平均折入團購價<br>
+      ・修正手機版欄位跑版問題<br>
+      ・新增手動調整團購價提示
+    </div>
+  </span>
+  <br>
+  💩 By 璐璐璐
+</h2>
 
 <!-- 折數 -->
 <div class="section">
@@ -632,7 +684,18 @@ if (shippingMethod || shippingFeeEl?.value !== "") {
   alert("已複製，可直接貼到社群！");
 }
 
+function toggleVersionLog(e) {
+  // 只有「不能 hover 的裝置」才用點擊
+  if (window.matchMedia("(hover: hover)").matches) return;
 
+  e.stopPropagation();
+  document.getElementById("versionLog").classList.toggle("show");
+}
+
+/* 點其他地方自動關閉（手機用） */
+document.addEventListener("click", function () {
+  document.getElementById("versionLog")?.classList.remove("show");
+});
 
 </script>
 
