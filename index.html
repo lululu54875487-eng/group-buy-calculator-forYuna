@@ -223,25 +223,11 @@ button.delete {
   .header,
   .row {
     display: grid;
-    grid-template-columns:
-      26px          /* # */
-      minmax(60px, 1fr)  /* ⭐ 品項名稱：最小 60px */
-      60px          /* 原價 */
-      56px          /* 團購價 */
-      32px;         /* 刪除 */
+    grid-template-columns: 26px 1fr 70px 64px auto;
     gap: 6px;
     align-items: center;
   }
- /* 讓 grid item 真的可以被壓縮 */
-  .row > * {
-    min-width: 0;
-  }
 
-  /* 品項名稱 input 強制可縮 */
-  .row input[type="text"] {
-    min-width: 0;
-    width: 100%;
-  }
   /* 贈品欄位（沒有團購價，多一個 checkbox） */
   #gifts .header,
   #gifts .row {
@@ -716,69 +702,3 @@ document.addEventListener("click", function () {
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
