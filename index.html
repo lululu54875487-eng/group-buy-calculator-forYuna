@@ -70,18 +70,21 @@ h2 { text-align: center; margin: 6px 0 12px; }
 }
 @media (min-width: 640px) {
 /* ===== 修正手機版刪除鈕跑位 ===== */
-.row {
-  position: relative;
-}
+  .row {
+    position: relative;
+  }
 
-.row button.delete {
-  position: absolute;
-  right: -4px;
-  top: 50%;
-  transform: translateY(-50%);
-  grid-column: unset;   /* ❗一定要有 */
-  z-index: 2;
-}
+  /* ✅ 只動刪除鈕 */
+  .row button.delete {
+    position: absolute;
+    right: -4px;
+    top: 50%;
+    transform: translateY(-50%);
+    grid-column: unset;
+    z-index: 2;
+  }
+
+
 
 /* 避免團購價被蓋住 */
 .price-input {
