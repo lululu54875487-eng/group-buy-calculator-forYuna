@@ -78,7 +78,20 @@ h2 { text-align: center; margin: 6px 0 12px; }
   color: #6e6e73;
   margin-bottom: 4px;
 }
+.gift-checkbox {
+  position: relative;
+}
 
+.gift-checkbox::before {
+  content: "平均折入";
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  color: #6e6e73;
+  white-space: nowrap;
+}
 input {
   width: 100%;
   height: 38px;
@@ -516,7 +529,7 @@ function addGift() {
     <div class="no"></div>
     <input placeholder="贈品名稱" />
     <input type="number" placeholder="金額" oninput="resetGiftShare(this)" />
-    <input type="checkbox" placeholder="平均折入" onchange="calculate(true)" />
+    <input type="checkbox" class="gift-checkbox" onchange="calculate(true)" />
     <button class="delete" onclick="this.parentElement.remove(); calculate(true)">✖</button>
   `;
   gifts.appendChild(r);
@@ -702,6 +715,7 @@ document.addEventListener("click", function () {
 
 </body>
 </html>
+
 
 
 
