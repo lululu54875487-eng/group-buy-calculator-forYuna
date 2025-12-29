@@ -160,12 +160,7 @@ input {
   line-height: 1.6;
 }
 .no { width: 26px; text-align: center; }
-.price-input {
-  
-  width: 90px;
-  text-align: center;
-  font-weight: 600;
-}
+
 button.copy { 
   background: #e5e5ea; 
   color: #333; 
@@ -252,6 +247,13 @@ button.delete {
     gap: 6px;
     align-items: center;
   }
+  .price-input {
+    background: rgba(10,132,255,0.08); /* 淡藍 */
+    placeholder="金額";
+    width: 90px;
+    padding: 4px;
+    box-sizing: border-box;
+  }
 .price-input::placeholder {
   color: #b0b0b5;   /* iOS 淺灰 */
   font-weight: 400;
@@ -261,14 +263,6 @@ button.delete {
   #gifts .row {
     grid-template-columns: 26px 1fr 70px 64px auto;
   }
-
-  .price-input {
-    placeholder="金額";
-    width: 64px;
-    padding: 4px;
-    box-sizing: border-box;
-  }
-
   input[type="checkbox"] {
     transform: scale(1.0);
   }
@@ -504,7 +498,7 @@ function addItem() {
     <div class="no"></div>
     <input placeholder="品項名稱" />
     <input type="number" placeholder="原價" oninput="calculate()" />
-  <input type="number" class="price-input" 
+  <input type="number" class="price-input" value="" min="0"
   oninput="
     this.dataset.locked='1';
     this.classList.add('manual');
@@ -721,6 +715,7 @@ document.addEventListener("click", function () {
 
 </body>
 </html>
+
 
 
 
