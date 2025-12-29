@@ -467,10 +467,9 @@ function copyRow(btn) {
   recalcAll();
   const src = btn.parentElement;
 
-  const name = src.children[1].value;
-  const original = src.children[2].value;
-  const price = src.querySelector(".price-input").value;
-
+  const name = row.querySelector(".item-name").value;
+  const original = row.querySelector(".item-original").value;
+  const price = row.querySelector(".item-price").value;
   const r = document.createElement("div");
   r.className = "row";
   r.innerHTML = `
@@ -498,11 +497,11 @@ function addItem() {
   r.innerHTML = `
     <div class="no"></div>
     <div class="label">品項名稱</div>
-    <input placeholder="品項名稱" />
+    <input class="item-name" placeholder="品項名稱" />
     <div class="label">原價</div>
-    <input type="number" placeholder="原價" oninput="calculate()" />
+    <input class="item-original" type="number" placeholder="原價" oninput="calculate()" />
     <div class="label">團購價</div>
-  <input type="number" class="price-input" value="" min="0"
+  <input class="price-input item-price" type="number" class="price-input" value="" min="0"
   oninput="
     this.dataset.locked='1';
     this.classList.add('manual');
@@ -718,6 +717,7 @@ document.addEventListener("click", function () {
 
 </body>
 </html>
+
 
 
 
