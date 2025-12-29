@@ -69,6 +69,11 @@ h2 { text-align: center; margin: 6px 0 12px; }
   display: grid;
   gap: 12px;
 }
+  /* ⭐ 自動計算欄位（團購品項原價總金額） */
+#bundleOriginal {
+  color: #2f5bea;
+  font-weight: 600;
+}
 @media (min-width: 640px) {
   .grid3 { grid-template-columns: repeat(3, 1fr); }
 }
@@ -102,11 +107,7 @@ input {
   background: #fafafa;
   box-sizing: border-box;
 }
-/* ⭐ 自動計算欄位（團購品項原價總金額） */
-#bundleOriginal {
-  color: #2f5bea;
-  font-weight: 600;
-}
+
 /* ===== 桌機版欄位對齊 ===== */
 .header .col {
   flex: 1;
@@ -740,6 +741,7 @@ document.addEventListener("click", function () {
 
 </body>
 </html>
+
 
 
 
