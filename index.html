@@ -220,30 +220,12 @@ button.delete {
     font-size: 12px;
     color: #6e6e73;
   }
-   .header,
+  .header,
   .row {
     display: grid;
-    grid-template-columns:
-      26px
-      minmax(60px, 1fr)
-      60px
-      56px
-      36px;   /* ⭐ 行為欄 */
+    grid-template-columns: 26px 1fr 70px 64px auto;
     gap: 6px;
     align-items: center;
-  }
-
-  .action-col {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    align-items: center;
-  }
-
-  .action-col button {
-    padding: 4px 6px;
-    font-size: 12px;
-    width: 100%;
   }
 
   /* 贈品欄位（沒有團購價，多一個 checkbox） */
@@ -498,22 +480,20 @@ function copyRow(btn) {
   recalcAll();
 }
 function addItem() {
-const r = document.createElement("div");
+  const r = document.createElement("div");
   r.className = "row";
   r.innerHTML = `
     <div class="no"></div>
     <input placeholder="品項名稱" />
     <input type="number" placeholder="原價" oninput="calculate()" />
-    <input type="number" class="price-input" value="" min="0"
-      oninput="
-        this.dataset.locked='1';
-        this.classList.add('manual');
-        calculate();
-      " />
-    <div class="action-col">
-      <button class="copy" onclick="copyRow(this)">📋</button>
-      <button class="delete" onclick="this.parentElement.parentElement.remove(); calculate()">✖</button>
-    </div>
+  <input type="number" class="price-input" value="" min="0"
+  oninput="
+    this.dataset.locked='1';
+    this.classList.add('manual');
+    calculate();
+  " />
+    <button class="copy" onclick="copyRow(this)">📋</button>
+    <button class="delete" onclick="this.parentElement.remove(); calculate()">✖</button>
   `;
   items.appendChild(r);
   renumber();
@@ -722,4 +702,3 @@ document.addEventListener("click", function () {
 
 </body>
 </html>
-
