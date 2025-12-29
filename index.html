@@ -466,10 +466,11 @@ function copyRow(btn) {
   // ⭐ 等於先按一次「團購價計算」
   recalcAll();
   const src = btn.parentElement;
-   const row = btn.parentElement;
-  const name = row.querySelector(".item-name").value;
-  const original = row.querySelector(".item-original").value;
-  const price = row.querySelector(".item-price").value;
+
+  const name = src.children[1].value;
+  const original = src.children[2].value;
+  const price = src.querySelector(".price-input").value;
+
   const r = document.createElement("div");
   r.className = "row";
   r.innerHTML = `
@@ -496,12 +497,9 @@ function addItem() {
   r.className = "row";
   r.innerHTML = `
     <div class="no"></div>
-    <div class="label">品項名稱</div>
-    <input class="item-name" placeholder="品項名稱" />
-    <div class="label">原價</div>
-    <input class="item-original" type="number" placeholder="原價" oninput="calculate()" />
-    <div class="label">團購價</div>
-  <input class="price-input item-price" type="number" class="price-input" value="" min="0"
+    <input placeholder="品項名稱" />
+    <input type="number" placeholder="原價" oninput="calculate()" />
+  <input type="number" class="price-input" value="" min="0"
   oninput="
     this.dataset.locked='1';
     this.classList.add('manual');
@@ -557,9 +555,7 @@ function calculate(forceRecalc = false) {
   // ⭐ 自動算 C
   let originalSum = 0;
   document.querySelectorAll("#items .row").forEach(r => {
-   originalSum += Number(
-  r.querySelector(".item-original")?.value || 0
-);
+    originalSum += Number(r.children[2].value) || 0;
   });
   bundleOriginal.value = originalSum;
   
@@ -719,13 +715,3 @@ document.addEventListener("click", function () {
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
