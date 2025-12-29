@@ -473,6 +473,27 @@ function getRate() {
     ? (bundlePrice.value - coupon.value) / bundleOriginal.value
     : 0;
 }
+function togglePriceInputLock() {
+  const itemRows = document.querySelectorAll("#items .row");
+
+  // 是否「至少有一筆原價 > 0」
+  const hasAnyOriginal = Array.from(itemRows).some(r => {
+    const val = Number(r.children[2].value);
+    return val > 0;
+  });
+
+  // 控制團購價欄位
+  document.querySelectorAll("#items .price-input").forEach(input => {
+    if (!hasAnyOriginal) {
+      input.readOnly = true;
+      input.placeholder = "請先輸入原價";
+      input.classList.remove("manual"); // 防止黃底誤導
+    } else {
+      input.readOnly = false;
+      input.placeholder = "";
+    }
+  });
+}
   //重置平均折入checkbox
 function resetGiftShare(amountInputEl) {
   const row = amountInputEl.closest(".row");
@@ -539,6 +560,7 @@ function addItem() {
    // ⭐ 顯示提醒
   document.getElementById("recalcHint").style.display = "block";
 }
+
 function recalcAll() {
   document.querySelectorAll("#items .price-input").forEach(input => {
     delete input.dataset.locked;   // 解除手動鎖定
@@ -576,7 +598,10 @@ function addAdditionalItem() {
   renumber();
   calculate();
 }
+
 function calculate(forceRecalc = false) {
+  
+  togglePriceInputLock();   // ⭐⭐ 加這行
 
   // ⭐ 自動算 C
   let originalSum = 0;
