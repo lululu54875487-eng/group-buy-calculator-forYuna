@@ -222,11 +222,17 @@ button.delete {
   .header,
   .row {
     display: grid;
-    grid-template-columns: 26px 1fr 70px 64px auto;
+    grid-template-columns: 26px 1fr 70px 64px;
     gap: 6px;
     align-items: center;
+    position: relative;
   }
-
+  .row button.delete {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  }
   /* 贈品欄位（沒有團購價，多一個 checkbox） */
   #gifts .header,
   #gifts .row {
