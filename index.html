@@ -499,7 +499,7 @@ function resetGiftShare(amountInputEl) {
   const row = amountInputEl.closest(".row");
   const cb = row.querySelector('input[type="checkbox"]');
   if (cb) cb.checked = false; // ⭐ 金額變了就取消平均折入
-  calculate(true);
+  calculate();
 }
 function renumber() {
   let i = 1;
@@ -769,6 +769,7 @@ document.addEventListener("click", function () {
 
 </body>
 </html>
+
 
 
 
