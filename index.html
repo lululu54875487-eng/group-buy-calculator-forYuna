@@ -209,6 +209,12 @@ button.delete {
     padding: 4px;
     box-sizing: border-box;
   }
+  input[readonly] {
+  background: #eef1ff;          /* 淡淡藍灰 */
+  border-color: #c8d2ff;
+  color: #2f5bea;
+  font-weight: 600;
+}
   /* ===== 手機版欄位修正 ===== */
 @media (max-width: 480px) {
   /* 隱藏贈品 header 的「平均折入」 */
@@ -282,12 +288,6 @@ button.delete {
   input[type="checkbox"] {
     transform: scale(1.0);
   }
-
-  input[readonly] {
-  background: #f1f1f3;
-  color: #555;
-}
-
   button.delete {
     padding: 6px;
   }
@@ -769,6 +769,7 @@ document.addEventListener("click", function () {
 
 </body>
 </html>
+
 
 
 
