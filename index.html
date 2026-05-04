@@ -737,7 +737,7 @@ if (shippingMethod || shippingFeeEl?.value !== "") {
     const name = r.children[1].value || "（未填寫）";
     const amount = r.children[2].value || 0;
     const shared = r.children[3].checked;
-    text += `${i++}. 贈品：${name} $${amount}${shared ? "" : ""} ➡️
+    text += `${i++}.${name} $${amount}${shared ? "" : ""} ➡️
 `;
   });
 
