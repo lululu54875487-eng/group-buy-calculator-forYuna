@@ -330,6 +330,69 @@ button.delete {
 .version-tooltip.show {
   display: block;
 }
+
+/* ===== 明細整理 Modal ===== */
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 99999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.45);
+
+  justify-content: center;
+  align-items: center;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-box {
+  width: min(92vw, 720px);
+  max-height: 88vh;
+
+  background: white;
+  border-radius: 18px;
+
+  padding: 18px;
+
+  overflow: auto;
+}
+
+.modal-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+#detailInput,
+#detailOutput {
+  width: 100%;
+  min-height: 240px;
+
+  border-radius: 12px;
+  border: 1px solid #d1d1d6;
+
+  padding: 12px;
+
+  font-size: 14px;
+  line-height: 1.6;
+
+  resize: vertical;
+  box-sizing: border-box;
+
+  margin-bottom: 12px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
 </style>
 </head>
 <div class="watermark">
