@@ -838,6 +838,14 @@ function closeDetailModal() {
   document.getElementById("detailModal").classList.remove("show");
 }
 
+function clearDetailText() {
+
+  document.getElementById("detailInput").value = "";
+
+  document.getElementById("detailOutput").value = "";
+
+}
+
 function generateDetail() {
 
   const text = document.getElementById("detailInput").value;
@@ -921,9 +929,13 @@ function generateDetail() {
       <button onclick="generateDetail()">
         ✨ 整理成明細資料
       </button>
-
+      
+      <button onclick="clearDetailText()">
+        🗑 清除所有資料 
+      </button>
+      
       <button class="delete" onclick="closeDetailModal()">
-        關閉
+        ❌ 關閉
       </button>
     </div>
 
