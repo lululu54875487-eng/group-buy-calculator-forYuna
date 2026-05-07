@@ -834,6 +834,21 @@ function openDetailModal() {
   document.getElementById("detailModal").classList.add("show");
 }
 
+function copyDetailOutput() {
+
+  const output =
+    document.getElementById("detailOutput").value;
+
+  if (!output.trim()) {
+    alert("目前沒有可複製的內容");
+    return;
+  }
+
+  navigator.clipboard.writeText(output);
+
+  alert("已複製整理結果！");
+}
+
 function closeDetailModal() {
   document.getElementById("detailModal").classList.remove("show");
 }
@@ -910,8 +925,8 @@ function generateDetail() {
 
   document.getElementById("detailOutput").value = output;
   // ⭐ 自動複製
-  navigator.clipboard.writeText(output);
-  alert("已整理並自動複製！");
+  //navigator.clipboard.writeText(output);
+  //alert("已整理並自動複製！");
 }
 
 </script>
@@ -932,11 +947,12 @@ function generateDetail() {
       <button onclick="generateDetail()">
         ✨ 整理成明細資料
       </button>
-      
+      <button onclick="copyDetailOutput()">
+        📋 複製結果
+      </button>
       <button onclick="clearDetailText()">
         🗑 清除所有資料 
       </button>
-      
       <button class="delete" onclick="closeDetailModal()">
         ❌ 關閉
       </button>
