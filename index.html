@@ -769,7 +769,37 @@ document.addEventListener("click", function () {
 });
 
 </script>
+<!-- 明細整理 Modal -->
+<div id="detailModal" class="modal">
+  <div class="modal-box">
 
+    <div class="modal-title">
+      📑 貼上認購清單
+    </div>
+
+    <textarea
+      id="detailInput"
+      placeholder="請貼上剛剛複製的認購清單..."
+    ></textarea>
+
+    <div class="modal-actions">
+      <button onclick="generateDetail()">
+        ✨ 整理成明細資料
+      </button>
+
+      <button class="delete" onclick="closeDetailModal()">
+        關閉
+      </button>
+    </div>
+
+    <textarea
+      id="detailOutput"
+      placeholder="整理結果會顯示在這裡"
+      readonly
+    ></textarea>
+
+  </div>
+</div>
 </body>
 </html>
 
