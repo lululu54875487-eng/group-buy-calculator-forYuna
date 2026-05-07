@@ -828,8 +828,12 @@ function toggleVersionLog(e) {
 
 /* 點其他地方自動關閉（手機用） */
 document.addEventListener("click", function () {
-  
-  function openDetailModal() {
+  document.getElementById("versionLog")?.classList.remove("show");
+});
+
+/* ===== 明細整理 ===== */
+
+function openDetailModal() {
   document.getElementById("detailModal").classList.add("show");
 }
 
@@ -850,9 +854,6 @@ function generateDetail() {
   lines.forEach(line => {
 
     line = line.trim();
-
-    // 抓格式：
-    // 1. NUN01 $274 ➡️ 萱拔
 
     const match = line.match(
       /^\d+\.\s*(.+?)\s*\$(\d+)\s*➡️\s*(.+)$/
@@ -895,6 +896,7 @@ function generateDetail() {
     });
 
     output += `    💰 小計：${data.subtotal}\n\n`;
+
     output += `⸻\n\n`;
 
   });
@@ -903,8 +905,6 @@ function generateDetail() {
 
   document.getElementById("detailOutput").value = output;
 }
-  document.getElementById("versionLog")?.classList.remove("show");
-});
 
 </script>
 <!-- 明細整理 Modal -->
