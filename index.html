@@ -865,70 +865,114 @@ function clearDetailText() {
 
 function generateDetail() {
 
-  const text = document.getElementById("detailInput").value;
+ const text = document.getElementById("detailInput").value;
 
-  const lines = text.split("\n");
+ const lines = text.split("\n");
 
-  const users = {};
+ const users = {};
 
-  let total = 0;
+ let total = 0;
 
-  lines.forEach(line => {
+ let currentGroupName = "";
 
-    line = line.trim();
+ lines.forEach(rawLine => {
 
-    const match = line.match(
-      /^\d+\.\s*(.+?)\s*\$(\d+)\s*➡️\s*(.+)$/
-    );
+   let line = rawLine.trim();
 
-    if (!match) return;
+   if (!line) return;
 
-    const itemName = match[1].trim();
-    const price = Number(match[2]);
-    const user = match[3].trim();
+   // ===== 情況1：正常格式 =====
+   // 1. 品名 $100➡️璐璐
 
-    if (!user) return;
+   let normalMatch = line.match(
+     /^\d+\.\s*(.+?)\s*\$(\d+)\s*➡️\s*(.+)$/
+   );
 
-    if (!users[user]) {
-      users[user] = {
-        items: [],
-        subtotal: 0
-      };
-    }
+   if (normalMatch) {
 
-    users[user].items.push({
-      name: itemName,
-      price
-    });
+     const itemName = normalMatch[1].trim();
+     const price = Number(normalMatch[2]);
+     const user = normalMatch[3].trim();
 
-    users[user].subtotal += price;
+     addUserItem(user, itemName, price);
 
-    total += price;
+     total += price;
 
-  });
+     return;
+   }
 
-  let output = `📦 各自認購清單與金額\n\n`;
+   // ===== 情況2：只有品名 =====
+   // 1. 高腰褲三件組
 
-  Object.entries(users).forEach(([user, data]) => {
+   let groupMatch = line.match(
+     /^\d+\.\s*(.+)$/
+   );
 
-    output += `➡️ ${user}\n\n`;
+   if (groupMatch) {
 
-    data.items.forEach(item => {
-      output += `* ${item.name} $${item.price}\n`;
-    });
+     currentGroupName = groupMatch[1].trim();
 
-    output += `    💰 小計：${data.subtotal}\n\n`;
+     return;
+   }
 
-    output += `⸻\n\n`;
+   // ===== 情況3：一件$185➡️璐璐 =====
 
-  });
+   let subMatch = line.match(
+     /^一件\s*\$(\d+)\s*➡️\s*(.+)$/
+   );
 
-  output += `✅ 總金額核對：${total}\n`;
+   if (subMatch && currentGroupName) {
 
-  document.getElementById("detailOutput").value = output;
-  // ⭐ 自動複製
-  //navigator.clipboard.writeText(output);
-  //alert("已整理並自動複製！");
+     const price = Number(subMatch[1]);
+     const user = subMatch[2].trim();
+
+     addUserItem(user, currentGroupName, price);
+
+     total += price;
+
+     return;
+   }
+
+ });
+
+ function addUserItem(user, itemName, price) {
+
+   if (!user) return;
+
+   if (!users[user]) {
+     users[user] = {
+       items: [],
+       subtotal: 0
+     };
+   }
+
+   users[user].items.push({
+     name: itemName,
+     price
+   });
+
+   users[user].subtotal += price;
+ }
+
+ let output = `📦 各自認購清單與金額\n\n`;
+
+ Object.entries(users).forEach(([user, data]) => {
+
+   output += `➡️ ${user}\n\n`;
+
+   data.items.forEach(item => {
+     output += `* ${item.name} $${item.price}\n`;
+   });
+
+   output += `💰 小計：${data.subtotal}\n\n`;
+
+   output += `⸻\n\n`;
+
+ });
+
+ output += `✅ 總金額核對：${total}\n`;
+
+ document.getElementById("detailOutput").value = output;
 }
 
 </script>
