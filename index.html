@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -863,9 +863,35 @@ function clearDetailText() {
 
 }
 
+function normalizeDetailInputText(text) {
+  const rawLines = text
+    .replace(/\r\n?/g, "\n")
+    .split("\n")
+    .map(line => line.trim())
+    .filter(Boolean);
+
+  const cleanedLines = [];
+
+  rawLines.forEach(line => {
+    const isNewDetailLine = /^\d+\./.test(line) || /^一件\s*\$/.test(line);
+
+    if (isNewDetailLine || cleanedLines.length === 0) {
+      cleanedLines.push(line);
+      return;
+    }
+
+    cleanedLines[cleanedLines.length - 1] += ` ${line}`;
+  });
+
+  return cleanedLines.join("\n");
+}
 function generateDetail() {
 
- const text = document.getElementById("detailInput").value;
+ const detailInput = document.getElementById("detailInput");
+
+ const text = normalizeDetailInputText(detailInput.value);
+
+ detailInput.value = text;
 
  const lines = text.split("\n");
 
@@ -1014,6 +1040,7 @@ function generateDetail() {
 </div>
 </body>
 </html>
+
 
 
 
