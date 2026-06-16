@@ -874,13 +874,22 @@ function normalizeDetailInputText(text) {
 
   rawLines.forEach(line => {
     const isNewDetailLine = /^\d+\./.test(line) || /^一件\s*\$/.test(line);
+    const isDetailContinuation = /^➡️/.test(line) || /^\$\d+/.test(line);
+    const isDetailFooter = /^(主購實際結帳金額|湊團總價|⭐️|（)/.test(line);
 
-    if (isNewDetailLine || cleanedLines.length === 0) {
+    if (isDetailFooter) return;
+
+    if (isNewDetailLine) {
       cleanedLines.push(line);
       return;
     }
 
-    cleanedLines[cleanedLines.length - 1] += ` ${line}`;
+    const lastLine = cleanedLines[cleanedLines.length - 1] || "";
+    const lastLineNeedsMore = cleanedLines.length > 0 && !/\$\d+.*➡️\s*\S+/.test(lastLine);
+
+    if ((isDetailContinuation || lastLineNeedsMore) && cleanedLines.length > 0) {
+      cleanedLines[cleanedLines.length - 1] += ` ${line}`;
+    }
   });
 
   return cleanedLines.join("\n");
@@ -980,19 +989,19 @@ function generateDetail() {
    users[user].subtotal += price;
  }
 
- let output = `📦 各自認購清單與金額\n\n`;
+ let output = `📦 各自認購清單與金額\n`;
 
  Object.entries(users).forEach(([user, data]) => {
 
-   output += `➡️ ${user}\n\n`;
+   output += `➡️ ${user}\n`;
 
    data.items.forEach(item => {
      output += `* ${item.name} $${item.price}\n`;
    });
 
-   output += `💰 小計：${data.subtotal}\n\n`;
+   output += `💰 小計：${data.subtotal}\n`;
 
-   output += `⸻\n\n`;
+   output += `⸻\n`;
 
  });
 
