@@ -69,6 +69,35 @@ h2 { text-align: center; margin: 6px 0 12px; }
   display: grid;
   gap: 12px;
 }
+.quick-set {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 140px auto;
+  gap: 8px;
+  align-items: end;
+  margin: 8px 0 6px;
+}
+.quick-set button {
+  height: 38px;
+  white-space: nowrap;
+}
+.quick-set .label {
+  white-space: nowrap;
+}
+.quick-set-help {
+  color: #0a84ff;
+  background: rgba(10,132,255,0.1);
+  padding: 8px 10px;
+  border-radius: 10px;
+  margin: 10px 0 6px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.quick-set-help b {
+  font-size: 13px;
+}
+.quick-set .hint {
+  min-height: 16px;
+}
   /* ⭐ 自動計算欄位（團購品項原價總金額） */
 #bundleOriginal {
   color: #2f5bea;
@@ -217,6 +246,12 @@ button.delete {
 }
   /* ===== 手機版欄位修正 ===== */
 @media (max-width: 480px) {
+  .quick-set {
+    grid-template-columns: 1fr;
+  }
+  .quick-set button {
+    width: 100%;
+  }
   /* 隱藏贈品 header 的「平均折入」 */
   #gifts .header div:nth-child(4) {
     display: none;
@@ -401,10 +436,12 @@ button.delete {
 <body>
 
 <h2>
-  ✨Yuna 團購湊團計算器 Ver1.2
+  ✨Yuna 團購湊團計算器 Ver1.3
   <span class="version-wrap" onclick="toggleVersionLog(event)">
     ｜版本肝辛日誌📔
     <div class="version-tooltip" id="versionLog">
+      <b>Ver 1.3 更新內容</b><br>
+      ・新增「搜尋品名」與「快速設定價格」功能<br>
       <b>Ver 1.2 更新內容</b><br>
       ・新增「整理成明細資料」功能<br>
       <b>Ver 1.1 更新內容</b><br>
@@ -444,6 +481,27 @@ button.delete {
     </div>
   </div>
   
+</div>
+
+<!-- 快速設定價格 -->
+<div class="section">
+  <b>⚡ 同名品項快速設定價格</b>
+  <div class="quick-set-help">
+    品項很多、同一個品名重複出現時，在這裡輸入「完整品名」和價格，按套用就會一次改掉下方全部相同品名的團購價。
+  </div>
+  <div class="quick-set">
+    <div>
+      <div class="label">搜尋品名（完全比對）</div>
+      <input type="text" id="quickSetName" placeholder="例：高腰褲三件組" />
+      <div class="hint">要跟下方品項名稱一模一樣才會套用</div>
+    </div>
+    <div>
+      <div class="label">快速設定價格</div>
+      <input type="number" id="quickSetPrice" placeholder="例：185" min="0" />
+      <div class="hint">會寫入團購價欄位</div>
+    </div>
+    <button onclick="quickSetPriceByName()">套用價格</button>
+  </div>
 </div>
 
 <!-- 團購品項 -->
@@ -632,6 +690,45 @@ function recalcAll() {
     input.classList.remove("manual");
   });
   calculate(true); // forceRecalc = true
+}
+
+function quickSetPriceByName() {
+  const targetName = document.getElementById("quickSetName").value.trim();
+  const priceInput = document.getElementById("quickSetPrice");
+  const targetPrice = priceInput.value;
+
+  if (!targetName) {
+    alert("請先輸入要搜尋的完整品名");
+    return;
+  }
+
+  if (targetPrice === "" || Number(targetPrice) < 0) {
+    alert("請輸入有效的快速設定價格");
+    return;
+  }
+
+  let matchedCount = 0;
+
+  document.querySelectorAll("#items .row").forEach(r => {
+    const itemName = r.children[1].value.trim();
+
+    if (itemName === targetName) {
+      const itemPriceInput = r.querySelector(".price-input");
+      itemPriceInput.value = targetPrice;
+      itemPriceInput.dataset.locked = "1";
+      itemPriceInput.classList.add("manual");
+      matchedCount++;
+    }
+  });
+
+  calculate();
+
+  if (matchedCount === 0) {
+    alert("找不到完全符合的品名");
+    return;
+  }
+
+  alert(`已設定 ${matchedCount} 個品項的團購價`);
 }
 
 function addGift() {
