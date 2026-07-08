@@ -1,4 +1,4 @@
-﻿
+﻿﻿
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -971,7 +971,7 @@ function normalizeDetailInputText(text) {
 
   rawLines.forEach(line => {
     const isNewDetailLine = /^\d+\./.test(line) || /^一件\s*\$/.test(line);
-    const isDetailContinuation = /^➡️/.test(line) || /^\$\d+/.test(line);
+    const isDetailContinuation = /^➡️/.test(line) || /^\$\s*\d+/.test(line);
     const isDetailFooter = /^(主購實際結帳金額|湊團總價|⭐️|（)/.test(line);
 
     if (isDetailFooter) return;
@@ -982,7 +982,7 @@ function normalizeDetailInputText(text) {
     }
 
     const lastLine = cleanedLines[cleanedLines.length - 1] || "";
-    const lastLineNeedsMore = cleanedLines.length > 0 && !/\$\d+.*➡️\s*\S+/.test(lastLine);
+    const lastLineNeedsMore = cleanedLines.length > 0 && !/\$\s*\d+.*➡️\s*\S+/.test(lastLine);
 
     if ((isDetailContinuation || lastLineNeedsMore) && cleanedLines.length > 0) {
       cleanedLines[cleanedLines.length - 1] += ` ${line}`;
@@ -1017,7 +1017,7 @@ function generateDetail() {
    // 1. 品名 $100➡️璐璐
 
    let normalMatch = line.match(
-     /^\d+\.\s*(.+?)\s*\$(\d+)\s*➡️\s*(.+)$/
+     /^\d+\.\s*(.+?)\s*\$\s*(\d+)\s*➡️\s*(.+)$/
    );
 
    if (normalMatch) {
@@ -1050,7 +1050,7 @@ function generateDetail() {
    // ===== 情況3：一件$185➡️璐璐 =====
 
    let subMatch = line.match(
-     /^一件\s*\$(\d+)\s*➡️\s*(.+)$/
+     /^一件\s*\$\s*(\d+)\s*➡️\s*(.+)$/
    );
 
    if (subMatch && currentGroupName) {
@@ -1146,6 +1146,7 @@ function generateDetail() {
 </div>
 </body>
 </html>
+
 
 
 
