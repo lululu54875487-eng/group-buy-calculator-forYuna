@@ -98,6 +98,39 @@ h2 { text-align: center; margin: 6px 0 12px; }
 .quick-set .hint {
   min-height: 16px;
 }
+.item-heading-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin-bottom: 8px;
+}
+.item-toolbar {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.item-toolbar button {
+  box-shadow: 0 2px 6px rgba(47,91,234,0.16);
+}
+.item-toolbar .import-action {
+  color: #2f5bea;
+  background: #eef1ff;
+  border: 1px solid #c8d2ff;
+}
+.import-hint {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 4px 8px;
+  border: 1px solid #e1e5f5;
+  border-radius: 8px;
+  background: #f8f9ff;
+  font-size: 11px;
+  color: #6e6e73;
+  box-sizing: border-box;
+}
   /* ⭐ 自動計算欄位（團購品項原價總金額） */
 #bundleOriginal {
   color: #2f5bea;
@@ -272,6 +305,22 @@ button.move:disabled {
   .quick-set button {
     width: 100%;
   }
+  .item-heading-row {
+    align-items: flex-start;
+  }
+  .item-toolbar {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+  .item-toolbar button {
+    width: 100%;
+    white-space: nowrap;
+  }
+  .import-hint {
+    grid-column: 1 / -1;
+    justify-content: center;
+  }
   /* 隱藏贈品 header 的「平均折入」 */
   #gifts .header div:nth-child(4) {
     display: none;
@@ -425,7 +474,8 @@ button.move:disabled {
 }
 
 #detailInput,
-#detailOutput {
+#detailOutput,
+#importInput {
   width: 100%;
   min-height: 240px;
 
@@ -456,10 +506,12 @@ button.move:disabled {
 <body>
 
 <h2>
-  ✨Yuna 團購湊團計算器 Ver1.4
+  ✨Yuna 團購湊團計算器 Ver1.5
   <span class="version-wrap" onclick="toggleVersionLog(event)">
     ｜版本肝辛日誌📔
     <div class="version-tooltip" id="versionLog">
+      <b>Ver 1.5 更新內容</b><br>
+      ・新增貼上認購清單並匯入頁面功能<br>
       <b>Ver 1.4 更新內容</b><br>
       ・團購品項新增上下移動與自動重新編號功能<br>
       <b>Ver 1.3 更新內容</b><br>
@@ -528,8 +580,14 @@ button.move:disabled {
 
 <!-- 團購品項 -->
 <div class="section">
-  <b>⭐️團購品項 (參與折數計算)</b> 
-  <button onclick="recalcAll()">💰 團購價計算</button>
+  <div class="item-heading-row">
+    <b>⭐️團購品項 (參與折數計算)</b>
+    <div class="item-toolbar">
+      <button onclick="recalcAll()">💰 團購價計算</button>
+      <button class="import-action" onclick="openImportModal()">📥 匯入認購清單</button>
+      <span class="import-hint">貼上舊清單，快速建立品項</span>
+    </div>
+  </div>
   <div id="recalcHint" class="hint hint-blue" style="display:block;">
   🌟 輸入完各品項價格，複製認購清單前請按一下「💰 團購價計算」按鈕 
   </div>
@@ -931,7 +989,8 @@ if (shippingMethod || shippingFeeEl?.value !== "") {
   document.querySelectorAll("#items .row").forEach(r => {
     const name = r.children[1].value || "（未填寫）";
     const price = r.querySelector(".price-input").value;
-    text += `${i++}. ${name} $${price} ➡️
+    const buyer = r.dataset.buyer || "";
+    text += `${i++}. ${name} $${price} ➡️${buyer}
 `;
   });
   
@@ -939,8 +998,9 @@ if (shippingMethod || shippingFeeEl?.value !== "") {
   document.querySelectorAll("#additionalItems .row").forEach(r => {
     const name = r.children[1].value || "（未填寫）";
     // 這裡使用 r.children[2] 取得價格欄位的值
-    const price = r.children[2].value || 0; 
-    text += `${i++}. 【加購】${name} $${price} ➡️
+    const price = r.children[2].value || 0;
+    const buyer = r.dataset.buyer || "";
+    text += `${i++}. 【加購】${name} $${price} ➡️${buyer}
 `;
   });
 
@@ -949,7 +1009,8 @@ if (shippingMethod || shippingFeeEl?.value !== "") {
     const name = r.children[1].value || "（未填寫）";
     const amount = r.children[2].value || 0;
     const shared = r.children[3].checked;
-    text += `${i++}.【贈】${name} $${amount}${shared ? "" : ""} ➡️
+    const buyer = r.dataset.buyer || "";
+    text += `${i++}.【贈】${name} $${amount}${shared ? "" : ""} ➡️${buyer}
 `;
   });
 
@@ -977,6 +1038,137 @@ function toggleVersionLog(e) {
 document.addEventListener("click", function () {
   document.getElementById("versionLog")?.classList.remove("show");
 });
+
+/* ===== 認購清單匯入 ===== */
+
+function openImportModal() {
+  document.getElementById("importModal").classList.add("show");
+}
+
+function closeImportModal() {
+  document.getElementById("importModal").classList.remove("show");
+}
+
+function getImportedNumber(text, label) {
+  const escapedLabel = label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const match = text.match(new RegExp(`${escapedLabel}\\s*(?:💰)?\\s*\\$?\\s*(-?\\d+(?:\\.\\d+)?)`));
+  return match ? Number(match[1]) : null;
+}
+
+function parsePurchaseList(text) {
+  const normalizedText = text.replace(/\r\n?/g, "\n");
+  const rateMatch = normalizedText.match(/折數[：:]\s*(\d+(?:\.\d+)?)/);
+  const rate = rateMatch ? Number(rateMatch[1]) : 0;
+  const entries = [];
+
+  normalizedText.split("\n").forEach(rawLine => {
+    const match = rawLine.trim().match(/^(\d+)[.．、]\s*(.+?)\s+\$\s*(-?\d+(?:\.\d+)?)\s*➡️?\s*(.*)$/);
+    if (!match) return;
+
+    entries.push({
+      number: Number(match[1]),
+      name: match[2].trim(),
+      price: Number(match[3]),
+      buyer: match[4].trim()
+    });
+  });
+
+  const shippingMatch = normalizedText.match(/寄送方式📦\s*(.+)/);
+  const shippingFeeMatch = normalizedText.match(/運費💰\s*(?:\$(\d+(?:\.\d+)?)|免運)/);
+
+  return {
+    entries,
+    rate,
+    bundlePrice: getImportedNumber(normalizedText, "優惠組合金額"),
+    coupon: getImportedNumber(normalizedText, "折扣碼"),
+    checkout: getImportedNumber(normalizedText, "主購實際結帳金額"),
+    groupTotal: getImportedNumber(normalizedText, "湊團總價"),
+    shippingMethod: shippingMatch ? shippingMatch[1].trim() : null,
+    shippingFee: shippingFeeMatch ? Number(shippingFeeMatch[1] || 0) : null
+  };
+}
+
+function importPurchaseList() {
+  const text = document.getElementById("importInput").value.trim();
+  if (!text) {
+    alert("請先貼上認購清單");
+    return;
+  }
+
+  const parsed = parsePurchaseList(text);
+  if (!parsed.entries.length) {
+    alert("找不到可匯入的品項，請確認每行包含編號、品名、$價格與箭頭");
+    return;
+  }
+
+  const existingInputs = document.querySelectorAll("#items input, #additionalItems input, #gifts input");
+  const hasExistingData = Array.from(existingInputs).some(input =>
+    input.type === "checkbox" ? input.checked : input.value !== ""
+  );
+  if (hasExistingData && !confirm("匯入會取代頁面上目前的品項，確定繼續嗎？")) return;
+
+  document.getElementById("items").replaceChildren();
+  document.getElementById("additionalItems").replaceChildren();
+  document.getElementById("gifts").replaceChildren();
+
+  const itemEntries = parsed.entries;
+  const itemTotal = itemEntries.reduce((sum, entry) => sum + entry.price, 0);
+  const couponValue = parsed.coupon ?? 0;
+  const effectiveBundlePrice = parsed.checkout !== null
+    ? parsed.checkout + couponValue
+    : parsed.bundlePrice ?? 0;
+  const targetOriginalTotal = parsed.rate > 0
+    ? Math.round((effectiveBundlePrice - couponValue) / parsed.rate)
+    : itemTotal;
+  let itemIndex = 0;
+  let assignedOriginalTotal = 0;
+
+  bundlePrice.value = effectiveBundlePrice;
+  coupon.value = couponValue;
+
+  parsed.entries.forEach(entry => {
+    addItem();
+    const row = document.querySelector("#items .row:last-child");
+    const priceInput = row.querySelector(".price-input");
+    row.children[1].value = entry.name;
+    const isLastItem = itemIndex === itemEntries.length - 1;
+    const inferredOriginal = isLastItem
+      ? targetOriginalTotal - assignedOriginalTotal
+      : Math.round(targetOriginalTotal * (itemTotal ? entry.price / itemTotal : 1 / itemEntries.length));
+    row.children[2].value = inferredOriginal;
+    assignedOriginalTotal += inferredOriginal;
+    itemIndex++;
+    priceInput.value = entry.price;
+    priceInput.dataset.locked = "1";
+    priceInput.classList.add("manual");
+    row.dataset.buyer = entry.buyer;
+  });
+
+  shippingMethod.value = parsed.shippingMethod?.replace(/未填寫$/, "") ?? "";
+  shippingFee.value = parsed.shippingFee ?? "";
+
+  calculate();
+  closeImportModal();
+
+  const warnings = [];
+  const importedNumbers = new Set(parsed.entries.map(entry => entry.number));
+  const firstNumber = Math.min(...importedNumbers);
+  const lastNumber = Math.max(...importedNumbers);
+  const missingNumbers = [];
+  for (let number = firstNumber; number <= lastNumber; number++) {
+    if (!importedNumbers.has(number)) missingNumbers.push(number);
+  }
+  if (missingNumbers.length) warnings.push(`編號缺少：${missingNumbers.join("、")}`);
+  if (parsed.bundlePrice === null || parsed.rate <= 0) {
+    warnings.push("清單缺少優惠組合金額或折數，無法準確反推原價");
+  }
+  if (parsed.groupTotal !== null && Number(groupTotal.innerText) !== parsed.groupTotal) {
+    warnings.push(`清單總價 ${parsed.groupTotal}，目前匯入品項合計 ${groupTotal.innerText}`);
+  }
+
+  const warningText = warnings.length ? `\n\n⚠️ 請檢查：\n${warnings.join("\n")}` : "";
+  alert(`已匯入 ${parsed.entries.length} 筆品項，並保留箭頭後的認購者。${warningText}`);
+}
 
 /* ===== 明細整理 ===== */
 
@@ -1159,6 +1351,25 @@ function generateDetail() {
 }
 
 </script>
+<!-- 認購清單匯入 Modal -->
+<div id="importModal" class="modal">
+  <div class="modal-box">
+    <div class="modal-title">📥 貼上要匯入的認購清單</div>
+    <div class="hint hint-blue">
+      清單內所有項目都會加入「團購品項」，並保留【贈】、【加購】標記及箭頭後的認購者。
+    </div>
+    <br>
+    <textarea
+      id="importInput"
+      placeholder="請貼上認購清單，所有項目都會快速建立在團購品項區"
+    ></textarea>
+    <div class="modal-actions">
+      <button onclick="importPurchaseList()">📥 確認匯入</button>
+      <button class="delete" onclick="document.getElementById('importInput').value = ''">🗑 清除</button>
+      <button class="delete" onclick="closeImportModal()">❌ 關閉</button>
+    </div>
+  </div>
+</div>
 <!-- 明細整理 Modal -->
 <div id="detailModal" class="modal">
   <div class="modal-box">
