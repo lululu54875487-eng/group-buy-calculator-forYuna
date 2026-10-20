@@ -1333,7 +1333,7 @@ function generateDetail() {
 
  Object.entries(users).forEach(([user, data]) => {
 
-   output += `➡️ ${user}\n`;
+   output += `➡️ @${user}\n`;
 
    data.items.forEach(item => {
      output += `* ${item.name} $${item.price}\n`;
