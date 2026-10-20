@@ -1234,7 +1234,7 @@ function normalizeDetailInputText(text) {
 
   return cleanedLines.join("\n");
 }
-function generateDetail() {
+function generateDetail(outputMode = "detail") {
 
  const detailInput = document.getElementById("detailInput");
 
@@ -1244,7 +1244,9 @@ function generateDetail() {
 
  const lines = text.split("\n");
 
- const users = {};
+  const users = {};
+
+  const itemCounts = new Map();
 
  let total = 0;
 
@@ -1312,7 +1314,9 @@ function generateDetail() {
 
  function addUserItem(user, itemName, price) {
 
-   if (!user) return;
+    if (!user) return;
+
+    itemCounts.set(itemName, (itemCounts.get(itemName) || 0) + 1);
 
    if (!users[user]) {
      users[user] = {
@@ -1329,11 +1333,25 @@ function generateDetail() {
    users[user].subtotal += price;
  }
 
- let output = `📦 各自認購清單與金額\n`;
+  if (outputMode === "inventory") {
+    let inventoryOutput = "📦 到貨清點表\n\n";
+    let totalCount = 0;
+
+    itemCounts.forEach((count, itemName) => {
+      inventoryOutput += `□ ${itemName}：${count} 件\n`;
+      totalCount += count;
+    });
+
+    inventoryOutput += `\n合計：${itemCounts.size} 種商品，共 ${totalCount} 件\n`;
+    document.getElementById("detailOutput").value = inventoryOutput;
+    return;
+  }
+
+  let output = `📦 各自認購清單與金額\n`;
 
  Object.entries(users).forEach(([user, data]) => {
 
-   output += `➡️ @${user}\n`;
+    output += `➡️ @${user.replace(/^@+/, "")}\n`;
 
    data.items.forEach(item => {
      output += `* ${item.name} $${item.price}\n`;
@@ -1395,6 +1413,9 @@ function generateDetail() {
     <div class="modal-actions">
       <button onclick="generateDetail()">
         ✨ 火速整理🚀
+      </button>
+      <button onclick="generateDetail('inventory')">
+        📦 到貨清點表
       </button>
       <button onclick="copyDetailOutput()">
         📋 複製結果
